@@ -1,18 +1,15 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+class IndexController extends Core_Controller_Action
 {
-
-    public function init()
-    {
-        /* Initialize action controller here */
-    }
-
+	public function init()
+	{
+		$this->_helper->layout()->setLayout('login');	
+	}
+	
     public function indexAction()
     {
-        // action body
+        
     }
-
-
 }
 
