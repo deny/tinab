@@ -42,6 +42,28 @@ class UserFactory extends Core_DataObject_Factory
 	}
 	
 	/**
+	 * Zwraca obiekt usera na podstawie emaila
+	 * 
+	 * @param	string	$sEmail	adres email
+	 * @return	User
+	 */
+	public function getByEmail($sEmail)
+	{
+		$aDbRes = $this->getSelect()
+						->where('email = ?', $sEmail)
+						->limit(1)->query()->fetchAll();
+						
+		if(empty($aDbRes))
+		{
+			throw new Core_DataObject_Exception('Brak user o podanym emailu');
+		}
+		
+		return $this->createObject($aDbRes);
+	}
+	
+// PRYWATNE FUNKCJE FABRYKI
+	
+	/**
 	 * (non-PHPdoc)
 	 * @see Core_DataObject_Factory::createObject()
 	 */
@@ -58,6 +80,8 @@ class UserFactory extends Core_DataObject_Factory
 		);
 	}
 	
+// FUNKCJE STATYCZNE
+
 	/**
 	 * Generuje sól dla usera
 	 * 	 

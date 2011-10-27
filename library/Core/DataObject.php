@@ -7,7 +7,7 @@
  * @license		New BSD License
  * @author		Mateusz Juściński, Mateusz Kohut, Daniel Kózka
  */
-abstract class A_DataObject
+abstract class Core_DataObject
 {
 	/**
 	 * Instance of db adapter
@@ -57,7 +57,7 @@ abstract class A_DataObject
 	 *
 	 * @param	string	$sTableName		name of DB table connected with model
 	 * @param	array	$aPrimaryKey	array with prmiary key description (<field name> => <field value>)
-	 * @return	A_DataObject
+	 * @return	Core_DataObject
 	 */
 	public function __construct($sTableName, array $aPrimaryKey)
 	{
@@ -116,7 +116,7 @@ abstract class A_DataObject
 		// is deleted
 		if($this->bDeleted)
 		{
-			throw new A_DataObject_Exception('Object is already deleted, you cannot save it.');
+			throw new Core_DataObject_Exception('Object is already deleted, you cannot save it.');
 		}
 
 		// check whether any data has been modified
@@ -173,7 +173,7 @@ abstract class A_DataObject
 	 */
 	private function getWhereString()
 	{
-		$oWhere = new A_DataObject_Where();
+		$oWhere = new Core_DataObject_Where();
 
 		foreach($this->aPrimaryValue as $sField => $sValue)
 		{

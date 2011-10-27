@@ -7,7 +7,7 @@
  * @license		New BSD License
  * @author		Mateusz Juściński, Mateusz Kohut, Daniel Kózka
  */
-abstract class A_DataObject_Factory
+abstract class Core_DataObject_Factory
 {
 	/**
 	 * Instance of db adapter
@@ -50,7 +50,7 @@ abstract class A_DataObject_Factory
 	 *
 	 * @param	string	$sTableName		name of DB table connected with model
 	 * @param	array	$aPrimaryKey	array with primay key fields
-	 * @return	A_DataObject_Factory
+	 * @return	Core_DataObject_Factory
 	 */
 	public function __construct($sTableName, array $aPrimaryKey)
 	{
@@ -92,12 +92,12 @@ abstract class A_DataObject_Factory
 	/**
 	 * Returns an array of object that matches the given condition
 	 *
-	 * @param	string|A_DataObject_Where	$oWhere		where string or Where object
+	 * @param	string|Core_DataObject_Where	$oWhere		where string or Where object
 	 * @return	array
 	 */
 	public function getFromWhere($mWhere, array $aOrder = array())
 	{
-		if($mWhere instanceof A_DataObject_Where)
+		if($mWhere instanceof Core_DataObject_Where)
 		{
 			$mWhere = $mWhere->getWhere();
 		}
@@ -118,7 +118,7 @@ abstract class A_DataObject_Factory
 	 * Returns a single object with the specified ID
 	 *
 	 * @param	mixed	$mId	specific key value or an array (<field> => <value>)
-	 * @return	A_DataObject
+	 * @return	Core_DataObject
 	 */
 	public function getOne($mId)
 	{
@@ -130,7 +130,7 @@ abstract class A_DataObject_Factory
 
 		if(!isset($aResult[0]))
 		{
-			throw new A_DataObject_Exception('The object with the specified ID does not exist');
+			throw new Core_DataObject_Exception('The object with the specified ID does not exist');
 		}
 
 		return $aResult[0];
@@ -142,7 +142,7 @@ abstract class A_DataObject_Factory
 	 * @param	int								$iPage		page number
 	 * @param	int								$iCount		number of results per page
 	 * @param	array							$aOrder		array with order definition
-	 * @param	string|A_DataObject_Wheret	$oWhere		where string or Where object
+	 * @param	string|Core_DataObject_Wheret	$oWhere		where string or Where object
 	 * @param	mixed							$mOption	optional parameters
 	 * @return	array
 	 */
@@ -160,7 +160,7 @@ abstract class A_DataObject_Factory
 		// adds where
 		if($mWhere !== null)
 		{
-			if($mWhere instanceof A_DataObject_Where)
+			if($mWhere instanceof Core_DataObject_Where)
 			{
 				$mWhere = $mWhere->getWhere();
 			}
@@ -181,7 +181,7 @@ abstract class A_DataObject_Factory
 	 * @param	int								$iPage		page number
 	 * @param	int								$iCount		number of results per page
 	 * @param	array							$aOrder		array with order definition
-	 * @param	string|A_DataObject_Wheret	$oWhere		where string or Where object
+	 * @param	string|Core_DataObject_Wheret	$oWhere		where string or Where object
 	 * @param	mixed							$mOption	optional parameters sended to getPage()
 	 * @return	array
 	 */
@@ -191,7 +191,7 @@ abstract class A_DataObject_Factory
 
 		if($mWhere !== null)
 		{
-			if($mWhere instanceof A_DataObject_Where)
+			if($mWhere instanceof Core_DataObject_Where)
 			{
 				$mWhere = $mWhere->getWhere();
 			}
@@ -199,7 +199,7 @@ abstract class A_DataObject_Factory
 			$oSelect->where($mWhere);
 		}
 
-		$oInterface = new A_DataObject_Paginator($this, $oSelect, $mOption);
+		$oInterface = new Core_DataObject_Paginator($this, $oSelect, $mOption);
 		$oInterface->setOrder($aOrder);
 
 		if($mWhere !== null)
@@ -236,7 +236,7 @@ abstract class A_DataObject_Factory
 	 * Create object from DB row
 	 *
 	 * @param	array	$aRow	one row from database
-	 * @return	A_DataObject
+	 * @return	Core_DataObject
 	 */
 	abstract protected function createObject(array $aRow);
 
@@ -303,20 +303,20 @@ abstract class A_DataObject_Factory
 	 */
 	protected function getWhereString($mId)
 	{
-		$oWhere = new A_DataObject_Where();
+		$oWhere = new Core_DataObject_Where();
 
 		if(count($this->aPrimaryKey) > 1)
 		{
 			// many fields in key
 			foreach($mId as $aKeys)
 			{
-				$oWhere2 = new A_DataObject_Where();
+				$oWhere2 = new Core_DataObject_Where();
 
 				foreach($this->aPrimaryKey as $sField)
 				{
 					if(!isset($aKeys[$sField]))
 					{
-						throw new A_DataObject_Exception('No value for key part: ' . $sField);
+						throw new Core_DataObject_Exception('No value for key part: ' . $sField);
 					}
 
 					// where for a single field
@@ -345,7 +345,7 @@ abstract class A_DataObject_Factory
 	/**
 	 * Returns on Instance of Factory
 	 *
-	 * @return A_DataObject_Factory
+	 * @return Core_DataObject_Factory
 	 */
 	public static function getNew()
 	{

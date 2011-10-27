@@ -13,8 +13,8 @@ class Core_Controller_Action extends Zend_Controller_Action
 	 */
 	protected function showFormMessages(Zend_Filter_Input $oFilter = null)
 	{
-		$this->view->assing('aValues', $this->_request->getPost());
-		$this->view->assing('aErrors', $oFilter->getMessages());
+		$this->view->assign('aValues', $this->_request->getPost());
+		$this->view->assign('aErrors', $oFilter->getMessages());
 	}
 	
 	/**

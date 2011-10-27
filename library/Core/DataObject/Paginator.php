@@ -7,7 +7,7 @@
  * @license		New BSD License
  * @author		Mateusz Juściński, Mateusz Kohut, Daniel Kózka
  */
-class A_DataObject_Paginator implements Zend_Paginator_Adapter_Interface
+class Core_DataObject_Paginator implements Zend_Paginator_Adapter_Interface
 {
 	/**
 	 * Array defines order
@@ -33,14 +33,14 @@ class A_DataObject_Paginator implements Zend_Paginator_Adapter_Interface
 	/**
 	 * Input data Factory name
 	 *
-	 * @var A_DataObject_Factory
+	 * @var Core_DataObject_Factory
 	 */
 	private $oFactory = null;
 
 	/**
 	 * Where definition
 	 *
-	 * @var A_DataObject_Where
+	 * @var Core_DataObject_Where
 	 */
 	private $oWhere = null;
 
@@ -54,12 +54,12 @@ class A_DataObject_Paginator implements Zend_Paginator_Adapter_Interface
 	/**
 	 * Constructor
 	 *
-	 * @param	A_DataObject_Factory	$oFactory		factory that creates this object
+	 * @param	Core_DataObject_Factory	$oFactory		factory that creates this object
 	 * @param	Zend_Db_Select			$oCountSelect	Select for rows counting
 	 * @param	mixed					$mOption		additional options sended to getPage()
-	 * @return	A_DataObject_Paginator
+	 * @return	Core_DataObject_Paginator
 	 */
-	public function __construct(A_DataObject_Factory $oFactory, Zend_Db_Select $oCountSelect, $mOption)
+	public function __construct(Core_DataObject_Factory $oFactory, Zend_Db_Select $oCountSelect, $mOption)
 	{
 		$this->oFactory		= $oFactory;
 		$this->oCountSelect	= $oCountSelect;
@@ -105,7 +105,7 @@ class A_DataObject_Paginator implements Zend_Paginator_Adapter_Interface
 	{
 		if($this->iCount !== null)
 		{
-			throw new A_DataObject_Exception('You cannot set ORDER after query execution');
+			throw new Core_DataObject_Exception('You cannot set ORDER after query execution');
 		}
 
 		$this->aOrder = $aOrder;
@@ -114,23 +114,23 @@ class A_DataObject_Paginator implements Zend_Paginator_Adapter_Interface
 	/**
 	 * Change query where
 	 *
-	 * @param	string | A_DataObject_Where	$mWhere		where string or Where object
+	 * @param	string | Core_DataObject_Where	$mWhere		where string or Where object
 	 * @return	void
 	 */
 	public function setWhere($mWhere)
 	{
 		if($this->iCount !== null)
 		{
-			throw new A_DataObject_Exception('You cannot set WHERE after query execution');
+			throw new Core_DataObject_Exception('You cannot set WHERE after query execution');
 		}
 
-		if($mWhere instanceof A_DataObject_Where)
+		if($mWhere instanceof Core_DataObject_Where)
 		{
 			$this->oWhere = $mWhere;
 		}
 		else
 		{
-			$this->oWhere = new A_DataObject_Where($mWhere);
+			$this->oWhere = new Core_DataObject_Where($mWhere);
 		}
 	}
 }

@@ -7,7 +7,7 @@
  * @license		New BSD License
  * @author		Mateusz Juściński, Mateusz Kohut, Daniel Kózka
  */
-class A_DataObject_Where
+class Core_DataObject_Where
 {
 	/**
 	 * Created SQL condition
@@ -26,9 +26,9 @@ class A_DataObject_Where
 	/**
 	 * Constructor
 	 *
-	 * @param	string|A_DataObject_Where	$mWhere		where string or Where object
+	 * @param	string|Core_DataObject_Where	$mWhere		where string or Where object
 	 * @param	string|null						$mValue		value for where string
-	 * @return	A_dataObject_Where
+	 * @return	Core_DataObject_Where
 	 */
 	public function __construct($mWhere = null, $mValue = null)
 	{
@@ -43,9 +43,9 @@ class A_DataObject_Where
 	/**
 	 * It adds next element of the condition, preceded by a logical AND
 	 *
-	 * @param	string|A_DataObject_Where	$mWhere		where string or Where object
+	 * @param	string|Core_DataObject_Where	$mWhere		where string or Where object
 	 * @param	string|null						$mValue		value for where string
-	 * @return	A_DataObject_Where
+	 * @return	Core_DataObject_Where
 	 */
 	public function addAnd($mWhere, $mValue = null)
 	{
@@ -62,9 +62,9 @@ class A_DataObject_Where
 	/**
 	 * It adds next element of the condition, preceded by a logical OR
 	 *
-	 * @param	string|A_DataObject_Where	$mWhere		where string or Where object
+	 * @param	string|Core_DataObject_Where	$mWhere		where string or Where object
 	 * @param	string|null						$mValue		value for where string
-	 * @return	A_DataObject_Where
+	 * @return	Core_DataObject_Where
 	 */
 	public function addOr($mWhere, $mValue = null)
 	{
@@ -115,7 +115,7 @@ class A_DataObject_Where
 	/**
 	 * Parse the pased value to the part of SQL command
 	 *
-	 * @param	string|A_DataObject_Where	$mWhere		where string or Where object
+	 * @param	string|Core_DataObject_Where	$mWhere		where string or Where object
 	 * @param	string|null						$mValue		value for where string
 	 * @return	string
 	 */
@@ -123,7 +123,7 @@ class A_DataObject_Where
 	{
 		$sResult = '';
 
-		if($mWhere instanceof A_DataObject_Where)
+		if($mWhere instanceof Core_DataObject_Where)
 		{
 			$sResult .= '('. $mWhere->getWhere() .')';
 		}

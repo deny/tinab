@@ -7,6 +7,6 @@
  * @license		New BSD License
  * @author		Mateusz Juściński, Mateusz Kohut, Daniel Kózka
  */
-class A_DataObject_Exception extends Exception
+class Core_DataObject_Exception extends Exception
 {
 }
