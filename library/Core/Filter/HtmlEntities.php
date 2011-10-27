@@ -2,15 +2,13 @@
 
 /**
  * Klasa filtra naprawiajaca problem z ó
- *
- * @author	Daniel Kózka
  */
 class Core_Filter_HtmlEntities extends Zend_Filter_HtmlEntities
 {
 	/**
 	 * Konstruktor
-	 * 
-	 * @param	array	$aOptions	opcje 
+	 *
+	 * @param	array	$aOptions	opcje
 	 * @return	Core_Filter_HtmlEntities
 	 */
 	public function __construct($aOptions)
