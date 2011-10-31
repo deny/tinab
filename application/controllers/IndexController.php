@@ -11,6 +11,7 @@ class IndexController extends Core_Controller_Action
 	 */
 	public function init()
 	{
+		parent::init();
 		$this->_helper->layout()->setLayout('login');
 	}
 
@@ -19,6 +20,11 @@ class IndexController extends Core_Controller_Action
 	 */
 	public function indexAction()
     {
+    	if(isset($this->oUser)) // jeśli suer jest zalogwany
+    	{
+    		$this->_redirect('/summary');
+    	}
+
 		if($this->_request->isPost()) // jeśli wysłano formularz
 		{
 			$oFilter = $this->getLoginFilter();
@@ -53,6 +59,20 @@ class IndexController extends Core_Controller_Action
 				$this->showFormMessages($oFilter);
 			}
 		}
+    }
+
+    /**
+     * Wylogowanie aktualonego usera
+     */
+    public function logoutAction()
+    {
+    	if(isset($this->oUser)) // jeśli user jest zalogwany
+    	{
+	    	Core_Auth::getInstance()->clearIdentity();
+	    	Zend_Session::destroy(true);
+    	}
+
+    	$this->_redirect('/');
     }
 
     /**

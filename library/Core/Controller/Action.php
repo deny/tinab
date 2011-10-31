@@ -14,6 +14,23 @@ class Core_Controller_Action extends Zend_Controller_Action
 	const MSG_ERROR = 'msg-error';
 
 	/**
+	 * Obiekt zalogowanego usera
+	 *
+	 * @var	User
+	 */
+	protected $oUser = null;
+
+	public function init()
+	{
+		parent::init();
+
+		if(Core_Auth::getInstance()->hasIdentity())
+		{
+			$this->oUser = Core_Auth::getInstance()->getUser();
+		}
+	}
+
+	/**
 	 * Przekazuje do widoku niezbędne dane z formularzy
 	 *
 	 * @param 	Zend_Filter_Input	$oFilter	obiekt filtra
