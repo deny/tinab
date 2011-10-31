@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Podstawa do budowy kontrolerów
@@ -6,7 +6,15 @@
 class Core_Controller_Action extends Zend_Controller_Action
 {
 	/**
-	 * Przekazuje do widoku niezbędne dane z formularzy 
+	 * Stałę dla flash messenegera
+	 *
+	 * @var	string
+	 */
+	const MSG_OK = 'msg-ok';
+	const MSG_ERROR = 'msg-error';
+
+	/**
+	 * Przekazuje do widoku niezbędne dane z formularzy
 	 *
 	 * @param 	Zend_Filter_Input	$oFilter	obiekt filtra
 	 * @return	void
@@ -16,7 +24,27 @@ class Core_Controller_Action extends Zend_Controller_Action
 		$this->view->assign('aValues', $this->_request->getPost());
 		$this->view->assign('aErrors', $oFilter->getMessages());
 	}
-	
+
+	/**
+	 * Dodaje komunikat do Flash Messengera
+	 *
+	 * @param	string	$sMessage	treść wiadomości
+	 * @param	strng	$sType		typ wiadomości (stałe Core_Controller_Action::MSG_*)
+	 * @param	bool	$bNow		czy wiadomośc powinna pojawiż się od razu
+	 * @return	void
+	 */
+	protected function addMessage($sMessage, $sType = self::MSG_OK, $bNow = false)
+	{
+		if($bNow)
+		{
+			$this->_helper->flashMessenger->addCurrentMsg($sMessage, $sType);
+		}
+		else
+		{
+			$this->_helper->flashMessenger->addMsg($sMessage, $sType);
+		}
+	}
+
 	/**
 	 * Przeniesienie na 404
 	 *

@@ -45,7 +45,7 @@ class IndexController extends Core_Controller_Action
 				}
 				else // nieudane logowanie
 				{
-					$this->_helper->flashMessenger->addMessage('Niepoprawny login bądź hasło');
+					$this->addMessage('Niepoprawny login bądź hasło', self::MSG_ERROR, true);
 				}
 			}
 			else // niepoprawne dane w formularzu
