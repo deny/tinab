@@ -13,7 +13,7 @@
 	</header>
 	<div class="page-wrapper">
 		<?php echo $this->flashMessenger(); ?>
-		<div class="content-wrapper">
+		<div class="<?php echo $this->layoutClass()->contentWrapper()?>">
 			<?php echo $this->layout()->content; ?>
 		</div>
 	</div>

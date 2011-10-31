@@ -1,28 +1,34 @@
-<h2>Formularz logowania</h2>
-<form method="post" action="/">
+<?php $this->layoutClass()->contentWrapper('login')?>
 
-	<?php $sField = 'email';
-	echo $this->formField(
-		'email',
-		$sField,
-		$this->formText($sField, $this->formValue($sField))
-	)?>
-	
-	<?php $sField = 'passwd';
-	echo $this->formField(
-		'hasło',
-		$sField,
-		$this->formPassword($sField, $this->formValue($sField))
-	)?>
-	
-	<?php $sField = 'remember';
-	echo $this->formField(
-		'Zapamiętaj mnie',
-		$sField,
-		$this->formCheckbox($sField, $this->formValue($sField)),
-		array('class' => 'remember'),
-		array('flip' => true)
-	)?>
-	
-	<button type="submit">zaloguj</button>
-</form>
+<header>
+	<h2>Logowanie</h2>
+</header>
+<div class="content">
+	<form method="post" action="/">
+
+		<?php $sField = 'email';
+		echo $this->formField(
+			'email',
+			$sField,
+			$this->formText($sField, $this->formValue($sField))
+		)?>
+
+		<?php $sField = 'passwd';
+		echo $this->formField(
+			'hasło',
+			$sField,
+			$this->formPassword($sField, $this->formValue($sField))
+		)?>
+
+		<?php $sField = 'remember';
+		echo $this->formField(
+			'Zapamiętaj mnie',
+			$sField,
+			$this->formCheckbox($sField, $this->formValue($sField)),
+			array('class' => 'remember'),
+			array('flip' => true)
+		)?>
+
+		<button type="submit">zaloguj</button>
+	</form>
+</div>

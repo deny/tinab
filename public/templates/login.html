@@ -7,14 +7,57 @@
 </head>
 <body>
 	<div class="page-wrapper">
-		<div class="messenger msg-info">
+		<div class="messenger msg-ok">
 			sdasdasdsa
 		</div>
 		<div class="messenger msg-error">
 			sdasdasdsa
 		</div>
-		<div class="content-wrapper">
-			content
+		<div class="content-wrapper login">
+			<header>
+				<h2>Logowanie</h2>
+			</header>
+			<div class="content">
+				<form method="post" action="/">
+
+					<div class="form-field error" >
+						<label for="email">email</label>
+						<p>
+							<input type="text" name="email" id="email" value="" />
+						</p>
+						<div class="error-inline">
+							<ul class="errors">
+								<li>Musisz podać adres email</li>
+							</ul>
+						</div>
+					</div>	
+					<div class="form-field error" >
+						<label for="passwd">hasło</label>
+						<p>
+							<input type="password" name="passwd" id="passwd" value="" />
+						</p>
+						<div class="error-inline">
+							<ul class="errors">
+								<li>Musisz podać hasło</li>
+							</ul>
+						</div>
+					</div>	
+					<div class="form-field flip error remember" >
+						<p>
+							<input type="hidden" name="remember" value="0" />
+							<input type="checkbox" name="remember" id="remember" value="0" />
+						</p>
+						<label for="remember">zapamiętaj mnie</label>
+						<div class="error-inline">
+							<ul class="errors">
+								<li>Musisz podać adres email</li>
+							</ul>
+						</div>
+						<div style="clear: both;"></div>
+					</div>	
+					<button type="submit">zaloguj</button>
+			</form>	
+			</div>
 		</div>
 	</div>
 </body>
