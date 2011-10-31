@@ -5,6 +5,17 @@
  */
 class View_Helper_MainPanel extends Zend_View_Helper_Abstract
 {
+	protected $aMenu = array(
+		'index' => array('Podsumowanie', '/summary'),
+		'tasks' => array('Zadania', '#')
+	);
+	/**
+	 * Obiekt zalogowanego usera
+	 *
+	 * @var	User
+	 */
+	protected $oUser;
+
 	/**
 	 * Funkcja helpera
 	 *
@@ -12,6 +23,8 @@ class View_Helper_MainPanel extends Zend_View_Helper_Abstract
 	 */
 	public function mainPanel()
 	{
+		$this->oUser = Core_Auth::getInstance()->getUser();
+
 		$sResult = '';
 		$sResult .= $this->getUserPanel();
 		$sResult .= $this->getMenu();
@@ -26,12 +39,26 @@ class View_Helper_MainPanel extends Zend_View_Helper_Abstract
 	 */
 	protected function getMenu()
 	{
-		return '<div class="main-nav">
-			<ul>
-				<li class="current"><a href="/">Podsumowanie</a></li>
-				<li><a href="/tasks">Zadania</a></li>
-			</ul>
-		</div>';
+		$oRequest = Zend_Controller_Front::getInstance()->getRequest();
+		$sCurrent= $oRequest->getControllerName();
+
+		$sResult = '<div class="main-nav"><ul>';
+
+		foreach($this->aMenu as $sController => $aInfo)
+		{
+			$sClass = '';
+			if( $sCurrent == $sController)
+			{
+				$sClass = ' class="current" ';
+			}
+
+			$sResult .= '<li' . $sClass . '><a href="'. $aInfo[1] . '">' . $aInfo[0] . '</a></li>';
+		}
+
+		$sResult .= '</ul></div>';
+
+		return $sResult;
+
 	}
 
 	/**
@@ -42,8 +69,8 @@ class View_Helper_MainPanel extends Zend_View_Helper_Abstract
 	protected function getUserPanel()
 	{
 		return '<div class="main-panel"><ul>
-				<li>deny1@test.pl</li>
-				<li><a href="">ustawienia</a></li>
+				<li>'. $this->oUser->getEmail() .'</li>
+				<li><a href="/settings">ustawienia</a></li>
 				<li><a href="/index/logout">wyloguj</a></li>
 			</ul>
 		</div>';
