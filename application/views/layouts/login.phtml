@@ -3,16 +3,14 @@
 <head>
 	<title>Tinab</title>
 	<meta charset="utf-8" />
-
-	<?php echo $this->headLink(); ?>
-	<?php echo $this->headScript(); ?>
+	<link rel="stylesheet" media="projection, screen" href="/css/tinab.css" />
 </head>
 <body>
-	<div>
+	<div class="page-wrapper">
 		<?php echo $this->flashMessenger(); ?>
-	</div>
-	<div>
-		<?php echo $this->layout()->content; ?>
+		<div class="content-wrapper">
+			<?php echo $this->layout()->content; ?>
+		</div>
 	</div>
 </body>
 </html>

@@ -41,7 +41,7 @@ class View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
 		// analizuję poszczególne wiadomości
 		foreach($aMsg as $aInfo)
 		{
-			$sResult .= '<div class="msg '. $aInfo['type'] .'">'. $aInfo['message'] .'</div>';
+			$sResult .= '<div class="messenger '. $aInfo['type'] .'">'. $aInfo['message'] .'</div>';
 
 		}
 

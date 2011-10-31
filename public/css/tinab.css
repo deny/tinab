@@ -1,0 +1,124 @@
+/* @group =reset */
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    background:transparent;
+}
+article,aside,canvas,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,summary {
+    display:block;
+}
+ul, ol {
+    list-style:none;
+}
+blockquote, q {
+    quotes:none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+a {
+    margin:0;
+    padding:0;
+    border:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+h1, h2, h3, h4 {
+	font-family: Helvetica, Arial, sans-serif;
+}
+/* @end =reset */
+/* @group =classes */
+.hide {display: none;}
+.hidden {visibility: hidden;}
+.align-right {text-align: right;}
+.align-center {text-align: center;}
+/* @end =classes */
+/* @group =global-page */
+body {
+	width: 980px;
+	margin: 0 auto;
+	background-color: #efefef;
+}
+body > header {
+	background: gray;
+}
+.page-wrapper {
+	background-color: #e5e5e5;
+	clear: both;
+}
+/* @end =global-page */
+/* @group =page-header */
+body > header .main-panel {
+	font-size: 10px;
+	float: right;
+}
+body > header .main-panel ul li {
+	display: inline;
+	margin: 5px 5px;
+}
+body > header .main-nav {
+	background-color: #a0a0a0;
+	float: left;
+	width: 98%;
+	padding: 0 1%;
+}
+body > header .main-nav ul li {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 5px 5px;
+	background-color: #808080;
+}
+body > header .main-nav ul li a {
+	color: #fff;
+	text-decoration: none;
+}
+body > header .main-nav ul li:hover,  
+body > header .main-nav ul li.current {
+	background-color: #d0d0d0;
+}
+/* @end =page-header */
+/* @group =page-content */
+.content-wrapper {
+	padding: 10px;
+}
+/* @end =page-content */
+/* @group =messenger */
+.messenger {
+	background: #ffff9e;
+	font-size: 12px;
+	margin: 2px auto;
+	padding: 5px 5px;
+	text-align: center;
+	width: 80%;
+}
+.messenger.msg-ok {
+	border: 1px solid #a4a4ff;
+	color: #3434ff;
+}
+.messenger.msg-error {
+	border: 1px solid #ffa4a4;
+	color: #ff3434;
+}
+/* @end =messenger */
