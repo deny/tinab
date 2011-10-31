@@ -11,6 +11,7 @@ class IndexController extends Core_Controller_Action
 	 */
 	public function init()
 	{
+		$this->bAllowGuest = true;
 		parent::init();
 		$this->_helper->layout()->setLayout('login');
 	}

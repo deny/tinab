@@ -61,8 +61,8 @@ class User extends Core_DataObject
 
 	/**
 	 * Konstruktor
-	 * 
-	 * @param	int		$iId		id usera	
+	 *
+	 * @param	int		$iId		id usera
 	 * @param	string	$sStatus	status
 	 * @param	string	$sEmail		email
 	 * @param	string	$sPasswd	hasło
@@ -135,17 +135,28 @@ class User extends Core_DataObject
 	{
 		return $this->sSurname;
 	}
-	
+
 	/**
 	 * Zwraca nicka (imię + nazwisko)
-	 * 
+	 *
 	 * @return	string
 	 */
 	public function getNick()
 	{
 		return $this->sName . ' ' . $this->sSurname;
 	}
-	
+
+	/**
+	 * Zwraca zbiór uprawnień przydzielnoych temu userowi
+	 *
+	 * @param	int|null	$iProjectId	id projektu z którym mają być zwiazane uprawnienia
+	 * @return	array
+	 */
+	public function getPrivileges($iProjectId = null)
+	{
+		return Privileges::getUserPrivileges($this, $iProjectId);
+	}
+
 	/**
 	 * Sprawdza czy hasło jest poprawne
 	 *
@@ -174,7 +185,7 @@ class User extends Core_DataObject
 	/**
 	 * Ustawia email
 	 *
-	 * @param	string	$sEmail	nowy email	
+	 * @param	string	$sEmail	nowy email
 	 * @return	void
 	 */
 	public function setEmail($sEmail)
@@ -200,7 +211,7 @@ class User extends Core_DataObject
 	/**
 	 * Ustawia nowe imie
 	 *
-	 * @param	string	$sName	nowe imie	
+	 * @param	string	$sName	nowe imie
 	 * @return	void
 	 */
 	public function setName($sName)

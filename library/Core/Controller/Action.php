@@ -10,8 +10,15 @@ class Core_Controller_Action extends Zend_Controller_Action
 	 *
 	 * @var	string
 	 */
-	const MSG_OK = 'msg-ok';
+	const MSG_OK 	= 'msg-ok';
 	const MSG_ERROR = 'msg-error';
+
+	/**
+	 * Czy pozwalać na "wizytę" osób niezalogowanych
+	 *
+	 * @var	bool
+	 */
+	protected $bAllowGuest = false;
 
 	/**
 	 * Obiekt zalogowanego usera
@@ -20,14 +27,95 @@ class Core_Controller_Action extends Zend_Controller_Action
 	 */
 	protected $oUser = null;
 
+	/**
+	 * Uprawnienia wymagana dla poszczególnych akcji
+	 *
+	 * @var	array
+	 */
+	private $aPriviliges = array();
+
+	/**
+	 * Id wybranego projektu
+	 *
+	 * @var	int
+	 */
+	protected $iProjectId = null;
+
+	/**
+	 * (non-PHPdoc)
+	 * @see Zend_Controller_Action::init()
+	 */
 	public function init()
 	{
 		parent::init();
 
+		// porbanie zalogowanego usera
 		if(Core_Auth::getInstance()->hasIdentity())
 		{
 			$this->oUser = Core_Auth::getInstance()->getUser();
 		}
+
+		// jeśli strefa tylko dla zalogowanych i user nie jest zalogowany
+		if(!$this->bAllowGuest && !isset($this->oUser))
+		{
+			$this->_redirect('/');
+		}
+
+		if(isset($this->oUser))
+		{
+			// sprawdzenie uprawnień
+			$oFront = Zend_Controller_Front::getInstance();
+			$sAction = $oFront->getRequest()->getActionName();
+			$sActionMethod = $oFront->getDispatcher()->formatActionName($sAction);
+
+			// ładujemy info o metodach klasy
+			if($this->_classMethods === null)
+			{
+				$this->_classMethods = get_class_methods($this);
+			}
+
+			// jeśli akcja istnieje
+			if(in_array($sActionMethod, $this->_classMethods))
+			{
+				 // jeśli brak wpisu o tej akcji == brak dostępu
+				if(!isset($this->aPriviliges[$sAction]))
+				{
+					throw new Zend_Controller_Action_Exception(
+						'No ACL entry for: '. $this->_request->getRequestUri(),
+						403
+					);
+				}
+
+				// pobranie uprawnień usera
+				$aPriv = $this->oUser->getPrivileges($this->iProjectId);
+
+				// sprawdzenie czy user ma wszystkie wymagane uprawnienia
+				foreach($this->aPriviliges[$sAction] as $sPriv)
+				{
+					if(!in_array($sPriv, $aPriv)) // jeśli brak uprawnienia
+					{
+						throw new Zend_Controller_Action_Exception(
+							$this->_request->getRequestUri() . ' - requires: '. $sPriv,
+							403
+						);
+					}
+				}
+
+			}
+		}
+	}
+
+	/**
+	 * Dodaje wpis do tablicy z wymaganymi uprawnieniami
+	 *
+	 * @param	string	$sAction		akcja
+	 * @param	array 	$aPriviliges	tablica z wymaganymi uprawnieniami
+	 * @return	Core_Controller_Action
+	 */
+	protected function setAcl($sAction, array $aPriviliges)
+	{
+		$this->aPriviliges[$sAction] = $aPriviliges;
+		return $this;
 	}
 
 	/**

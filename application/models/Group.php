@@ -5,14 +5,8 @@
  */
 class Group extends Core_DataObject
 {
-	// typy uprawnień
-	const PRIV_ADM = 'adm';
-	const PRIV_USERS_ADM = 'users_adm';
-	const PRIV_PROJ_CRATE = 'proj_crate';
-	const PRIV_PROJ_ADM = 'proj_adm';
-	
 	/**
-	 * Id grupy 
+	 * Id grupy
 	 *
 	 * @var int
 	 */
@@ -34,8 +28,8 @@ class Group extends Core_DataObject
 
 	/**
 	 * Konstruktor
-	 * 
-	 * @param	int		$iId			id grupy	
+	 *
+	 * @param	int		$iId			id grupy
 	 * @param	string	$sName			nazwa grupy
 	 * @param	int		$iProjectId		id projektu
 	 * @return	Group
@@ -86,7 +80,7 @@ class Group extends Core_DataObject
 	/**
 	 * Ustawia nazwę
 	 *
-	 * @param	string	$sName	nowa nazwa	
+	 * @param	string	$sName	nowa nazwa
 	 * @return	void
 	 */
 	public function setName($sName)
@@ -98,7 +92,7 @@ class Group extends Core_DataObject
 	/**
 	 * Ustawia id projektu
 	 *
-	 * @param	int		$iProjectId	nowe id projektu	
+	 * @param	int		$iProjectId	nowe id projektu
 	 * @return	void
 	 */
 	public function setProjectId($iProjectId)
