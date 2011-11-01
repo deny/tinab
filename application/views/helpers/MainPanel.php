@@ -5,11 +5,17 @@
  */
 class View_Helper_MainPanel extends Zend_View_Helper_Abstract
 {
+	/**
+	 * Główne menu
+	 *
+	 * @var	array
+	 */
 	protected $aMenu = array(
 		'summary' 	=> array('Podsumowanie', '/summary'),
 		'#1' 		=> array('Zadania', '#'),
 		'#2' 		=> array('Wiadomości', '#')
 	);
+
 	/**
 	 * Obiekt zalogowanego usera
 	 *
@@ -26,6 +32,15 @@ class View_Helper_MainPanel extends Zend_View_Helper_Abstract
 	{
 		$this->oUser = Core_Auth::getInstance()->getUser();
 
+		// pobranie globalnych uprawnień
+		$aPriv = $this->oUser->getPrivileges();
+
+		if(in_array(Privileges::ADMIN, $aPriv))
+		{
+			$this->aMenu['administration'] = array('Administracja', '/administration');
+		}
+
+		// wygenerowanie HTML'a
 		$sResult = '';
 		$sResult .= $this->getUserPanel();
 		$sResult .= $this->getMenu();

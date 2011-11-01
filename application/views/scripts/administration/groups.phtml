@@ -1,0 +1,41 @@
+<?php $this->layoutClass()->contentWrapper('admin')?>
+
+<div class="content">
+	<header>
+		<h2>Administracja - grupy</h2>
+	</header>
+	<div>
+		<?php foreach($this->oPaginator as $oItem):?>
+		<article>
+			<h4><?php echo $oItem->getName()?></h4>
+
+			<p>
+				<?php echo $oItem->getDescription()?>
+			</p>
+			<p><strong>Liczba użytkowników:</strong> <?php echo $oItem->getUsersCount()?></p>
+			<p>
+				<strong>Uprawnienia:</strong>
+				<?php echo implode(',', $this->privilegesDesc($oItem->getPrivileges()))?>
+			</p>
+			<p>
+				<a href="#">edytuj grupę</a> |
+				<a href="#">dodaj użytkownika</a> |
+				<a href="#">usuń grupę</a>
+			</p>
+
+		</article>
+		<?php endforeach;?>
+
+		<?php echo $this->paginationControl(
+					$this->oPaginator,
+					'Sliding',
+					'app-partials/paginator.phtml',
+					array(
+						'pname'		=> 'strona',
+						'pcount'	=> 6,
+						'actionUrl'	=> '/diety/lista'
+					)
+		);?>
+	</div>
+</div>
+<?php echo $this->sidebarAdmin()?>

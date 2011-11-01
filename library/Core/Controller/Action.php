@@ -32,7 +32,7 @@ class Core_Controller_Action extends Zend_Controller_Action
 	 *
 	 * @var	array
 	 */
-	private $aPriviliges = array();
+	private $aPrivileges = array();
 
 	/**
 	 * Id wybranego projektu
@@ -78,7 +78,7 @@ class Core_Controller_Action extends Zend_Controller_Action
 			if(in_array($sActionMethod, $this->_classMethods))
 			{
 				 // jeśli brak wpisu o tej akcji == brak dostępu
-				if(!isset($this->aPriviliges[$sAction]))
+				if(!isset($this->aPrivileges[$sAction]))
 				{
 					throw new Zend_Controller_Action_Exception(
 						'No ACL entry for: '. $this->_request->getRequestUri(),
@@ -90,7 +90,7 @@ class Core_Controller_Action extends Zend_Controller_Action
 				$aPriv = $this->oUser->getPrivileges($this->iProjectId);
 
 				// sprawdzenie czy user ma wszystkie wymagane uprawnienia
-				foreach($this->aPriviliges[$sAction] as $sPriv)
+				foreach($this->aPrivileges[$sAction] as $sPriv)
 				{
 					if(!in_array($sPriv, $aPriv)) // jeśli brak uprawnienia
 					{
@@ -108,13 +108,24 @@ class Core_Controller_Action extends Zend_Controller_Action
 	/**
 	 * Dodaje wpis do tablicy z wymaganymi uprawnieniami
 	 *
-	 * @param	string	$sAction		akcja
-	 * @param	array 	$aPriviliges	tablica z wymaganymi uprawnieniami
+	 * @param	mixed	$sAction		akcja/tablica akcji
+	 * @param	array 	$aPrivileges	tablica z wymaganymi uprawnieniami
 	 * @return	Core_Controller_Action
 	 */
-	protected function setAcl($sAction, array $aPriviliges)
+	protected function setAcl($mAction, array $aPrivileges)
 	{
-		$this->aPriviliges[$sAction] = $aPriviliges;
+		if(is_array($mAction)) // jeśli tablica akcji
+		{
+			foreach($mAction as $sAction)
+			{
+				$this->aPrivileges[$sAction] = $aPrivileges;
+			}
+		}
+		else // jesli pojedyńcza akcja
+		{
+			$this->aPrivileges[$mAction] = $aPrivileges;
+		}
+
 		return $this;
 	}
 

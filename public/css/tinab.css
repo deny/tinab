@@ -114,17 +114,31 @@ body > header .main-nav ul li.current a {
 } 
 /* @end =page-header */
 /* @group =page-content */
-.content-wrapper {
+.content-wrapper .content {
 	padding: 10px;
+	float: left;
 }
-.content-wrapper > header {
-	margin: 0 auto;
+.content-wrapper .content > header {
 	background-color: #afafaf;
-	padding: 5px 10px;
+	padding: 1px 10px;
 	border: 3px solid #aaaaaa;
 }
-.content-wrapper > .content {
-	margin: 0 auto;
+.content-wrapper .content > div {
+	background-color: #fff;
+	padding: 10px;
+	border: 3px solid #aaaaaa;
+}
+.sidebar {
+	float: right;
+	padding: 10px;
+}
+.box > header {
+	background-color: #afafaf;
+	padding: 1px 10px;
+	border: 3px solid #aaaaaa;
+	font-size: 12px;
+}
+.box > .box-content {
 	background-color: #fff;
 	padding: 10px;
 	border: 3px solid #aaaaaa;
@@ -192,13 +206,35 @@ form button[type="submit"]:hover {
 }
 /* @end =form */
 /* @group =site-login */
-.login > header {
-	width: 350px;	
-}
-.login > .content {
-	width: 350px;	
+.login .content {
+	width: 365px;
+	margin: 0 auto;
+	float: none;	
 }
 .login form {
 	margin-left: 20px;
 }
 /* @end =site-login */
+/* @group =site-admin */
+.admin .content {
+	width: 700px;
+}
+.admin .sidebar {
+	width: 240px;
+}
+.box-content.adm ul li {
+	font-size: 12px;
+}
+.admin article {
+	margin-bottom: 20px;
+}
+.admin article p {
+	font-size: 12px;
+	padding-left: 10px;
+}
+.admin article ul li {
+	display: inline;
+	font-size: 12px;
+	padding-left: 10px;
+}
+/* @end =site-admin */

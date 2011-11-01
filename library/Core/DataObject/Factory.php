@@ -148,7 +148,7 @@ abstract class Core_DataObject_Factory
 	 */
 	public function getPage($iPage, $iCount, array $aOrder = array(), $mWhere = null, $mOption = null)
 	{
-		$oSelect = $this->getSelect();
+		$oSelect = $this->getSelect('*', $mOption);
 		$oSelect->limitPage($iPage, $iCount);
 
 		// adds order
@@ -170,7 +170,7 @@ abstract class Core_DataObject_Factory
 
 		$aResult = $oSelect->query()->fetchAll();
 
-		return $this->createList($aResult);
+		return $this->createList($aResult, $mOption);
 	}
 
 // additional methods
@@ -218,15 +218,16 @@ abstract class Core_DataObject_Factory
 	 * Creates an array of objects from the results returned by the database
 	 *
 	 * @param	array	$aDbResult	results returned by the database
+	 * @param	array	$mOption	additional options
 	 * @return array
 	 */
-	protected function createList(array &$aDbResult)
+	protected function createList(array &$aDbResult, $mOption = null)
 	{
 		$aResult = array();
 
 		foreach($aDbResult as $aRow)
 		{
-			$aResult[] = $this->createObject($aRow);
+			$aResult[] = $this->createObject($aRow, $mOption);
 		}
 
 		return $aResult;
@@ -264,9 +265,10 @@ abstract class Core_DataObject_Factory
 	 * Returns a Select object
 	 *
 	 * @param	mixed	$mFields	fields to select
+	 * @param	mixed	$mOption	additional options
 	 * @return	Zend_Db_Select
 	 */
-	protected function getSelect($mFields = '*')
+	protected function getSelect($mFields = '*', $mOption = null)
 	{
 		if($this->oSelect === null)
 		{

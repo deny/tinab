@@ -6,9 +6,29 @@
 abstract class Privileges
 {
 	const ADMIN 		= 'adm';
-	const USERS_ADM 	= 'users_adm';
 	const PROJ_CRATE 	= 'proj_crate';
 	const PROJ_ADM 		= 'proj_adm';
+
+	/**
+	 * Opisy uprawnień
+	 *
+	 * @var	array
+	 */
+	protected static $aDescriptions = array(
+		self::ADMIN 		=> 'administracja',
+		self::PROJ_CRATE 	=> 'tworzenie projektów',
+		self::PROJ_ADM 		=> 'administracja projektem'
+	);
+
+	/**
+	 * Zwraca opisy uprawnień
+	 *
+	 * @return	array
+	 */
+	static public function getDescriptions()
+	{
+		return self::$aDescriptions;
+	}
 
 	/**
 	 * Zwraca tablicę z uprawnieniami usera dla poszczególnego projektu

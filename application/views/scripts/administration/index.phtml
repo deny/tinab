@@ -1,0 +1,32 @@
+<?php $this->layoutClass()->contentWrapper('admin')?>
+
+<div class="content">
+	<header>
+		<h2>Administracja</h2>
+	</header>
+	<div>
+		<article>
+			<h4>Użytkownicy</h4>
+			<p>
+				Tutaj utworzysz konta nowym użytkownikom, przydzielisz ich do wybranych grup, zbanujesz wybrane konta, usuniesz konta
+				<a href="#">przejdź &#187;</a>
+			</p>
+		</article>
+		<article>
+			<h4>Grupy</h4>
+			<p>
+				Tutaj możesz zarządzać globalnymi grupami poprzez tworzenie nowych grup, usuwanie już istniejących.
+				Do grup można przydzielać uprawnienia, które zyskują przydzieleni do nich użytkownicy
+				<a href="/administration/groups">przejdź &#187;</a>
+			</p>
+		</article>
+		<article>
+			<h4>Wiadomści</h4>
+			<p>
+				Stąd możesz wysłać wiadomości do wybranych użytkowników lub też do całych grup, projektów itp.
+				<a href="#">przejdź &#187;</a>
+			</p>
+		</article>
+	</div>
+</div>
+<?php echo $this->sidebarAdmin()?>
