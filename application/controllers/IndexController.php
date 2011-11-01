@@ -20,8 +20,8 @@ class IndexController extends Core_Controller_Action
 	 * Logowanie
 	 */
 	public function indexAction()
-    {
-    	if(isset($this->oUser)) // jeśli suer jest zalogwany
+	{
+		if(isset($this->oUser)) // jeśli user jest zalogwany
     	{
     		$this->_redirect('/summary');
     	}

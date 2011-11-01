@@ -61,7 +61,7 @@ class Core_Controller_Action extends Zend_Controller_Action
 			$this->_redirect('/');
 		}
 
-		if(isset($this->oUser))
+		if(isset($this->oUser) && !$this->bAllowGuest)
 		{
 			// sprawdzenie uprawnień
 			$oFront = Zend_Controller_Front::getInstance();
