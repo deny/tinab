@@ -1,0 +1,46 @@
+<?php $this->layoutClass()->contentWrapper('admin')?>
+
+<div class="content">
+	<header class="menu">
+		<h2>Administracja - użytkownicy</h2>
+		<a href="/administration/users-add">+nowy użytkownik</a>
+		<div class="clear"></div>
+	</header>
+	<div>
+		<?php foreach($this->oPaginator as $oItem):?>
+		<article>
+			<h4><?php echo $oItem->getNick()?> </h4>
+
+			<p>
+				<strong>email:</strong>
+				<?php echo $oItem->getEmail()?>
+				<strong>status:</strong>
+				<?php echo $this->userStatus($oItem)?>
+
+			</p>
+			<p>
+				<a href="#">edytuj grupy</a> |
+		<?php if($oItem->getStatus() == User::STATUS_ACTIVE):?>
+				<a href="/administration/users-status/id/<?php echo $oItem->getId() ?>">deaktywuj</a> |
+		<?php else:?>
+				<a href="/administration/users-status/id/<?php echo $oItem->getId() ?>">aktywuj</a> |
+		<?php endif;?>
+				<a href="/administration/users-edit/id/<?php echo $oItem->getId() ?>">edytuj użytkownika</a> |
+				<a href="#/administration/users-delete/id/<?php echo $oItem->getId() ?>" class="confirm" data-confirm="Czy na pewno chcesz usunąć tego użytkownika?">usuń użytkownika</a>
+			</p>
+		</article>
+		<?php endforeach;?>
+
+		<?php echo $this->paginationControl(
+					$this->oPaginator,
+					'Sliding',
+					'app-partials/paginator.phtml',
+					array(
+						'pname'		=> 'page',
+						'pcount'	=> 6,
+						'actionUrl'	=> '/administration/userss'
+					)
+		);?>
+	</div>
+</div>
+<?php echo $this->sidebarAdmin()?>

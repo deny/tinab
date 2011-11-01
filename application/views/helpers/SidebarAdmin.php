@@ -19,11 +19,11 @@ class View_Helper_SidebarAdmin extends Zend_View_Helper_Abstract
 		</header>
 		<div class="box-content adm">
 			<ul>
-				<li><a href="#">dodaj użytkownika</a></li>
+				<li><a href="/administration/users-add">dodaj użytkownika</a></li>
 				<li><a href="/administration/groups-add">dodaj grupę</a></li>
 				<li><a href="#">wyślij wiadomość</a></li>
 				<li>---</li>
-				<li><a href="#">użytkownicy</a></li>
+				<li><a href="/administration/users">użytkownicy</a></li>
 				<li><a href="/administration/groups">grupy</a></li>
 				<li><a href="#">statystyka</a></li>
 			</ul>

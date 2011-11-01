@@ -1,0 +1,48 @@
+<?php $this->layoutClass()->contentWrapper('admin')?>
+
+<div class="content">
+	<header>
+		<h2>Administracja - <?php echo $this->bEdit ? 'edycja użytkownika' : 'nowy użytkownik'?></h2>
+	</header>
+	<div>
+		<form method="post" action="" autocomplete="off">
+			<?php $sField = 'name';
+			echo $this->formField(
+				'imię',
+				$sField,
+				$this->formText($sField, $this->formValue($sField))
+			)?>
+
+			<?php $sField = 'surname';
+			echo $this->formField(
+				'nazwisko',
+				$sField,
+				$this->formText($sField, $this->formValue($sField))
+			)?>
+
+			<?php $sField = 'email';
+			echo $this->formField(
+				'email',
+				$sField,
+				$this->formText($sField, $this->formValue($sField))
+			)?>
+
+			<?php $sField = 'passwd';
+			echo $this->formField(
+				$this->bEdit ? 'nowe hasło' : 'hasło',
+				$sField,
+				$this->formPassword($sField)
+			)?>
+
+			<?php $sField = 'passwd2';
+			echo $this->formField(
+				'powtórz hasło',
+				$sField,
+				$this->formPassword($sField)
+			)?>
+
+			<button type="submit"><?php echo $this->bEdit ? 'zapisz' : 'dodaj'?></button>
+		</form>
+	</div>
+</div>
+<?php echo $this->sidebarAdmin()?>

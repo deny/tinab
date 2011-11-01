@@ -61,6 +61,20 @@ class UserFactory extends Core_DataObject_Factory
 		return $this->createObject($aDbRes[0]);
 	}
 
+	/**
+	 * Zwraca paginator userów z nieusuniętymi kontami
+	 *
+	 * @param	int		$iPage	strona
+	 * @param	int		$iCount	ilość elementów na stronę
+	 * @return	Zend_Paginator
+	 */
+	public function getActivePaginator($iPage, $iCount)
+	{
+		$oWhere = new Core_DataObject_Where('users.status != ?', User::STATUS_DELETED);
+
+		return $this->getPaginator($iPage, $iCount, array('email'), $oWhere);
+	}
+
 // PRYWATNE FUNKCJE FABRYKI
 
 	/**
