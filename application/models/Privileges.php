@@ -5,20 +5,41 @@
  */
 abstract class Privileges
 {
+	// uprawnienia globalne
 	const ADMIN 		= 'adm';
 	const PROJ_CRATE 	= 'proj_crate';
+
+	// uprawnienia projektowe
 	const PROJ_ADM 		= 'proj_adm';
 
 	/**
-	 * Opisy uprawnień
+	 * Opisy globalnych uprawnień
 	 *
 	 * @var	array
 	 */
-	protected static $aDescriptions = array(
+	protected static $aGlobalDesc = array(
 		self::ADMIN 		=> 'administracja',
 		self::PROJ_CRATE 	=> 'tworzenie projektów',
+	);
+
+	/**
+	 * Opisy projektowych uprawnień
+	 *
+	 * @var	array
+	 */
+	protected static $aProjectDesc = array(
 		self::PROJ_ADM 		=> 'administracja projektem'
 	);
+
+	/**
+	 * Zwraca listę globalnych uprawnień wraz z ich opisami
+	 *
+	 * @return	array
+	 */
+	static public function getGlobal()
+	{
+		return self::$aGlobalDesc;
+	}
 
 	/**
 	 * Zwraca opisy uprawnień
@@ -27,7 +48,25 @@ abstract class Privileges
 	 */
 	static public function getDescriptions()
 	{
-		return self::$aDescriptions;
+		return self::$aGlobalDesc + self::$aProjectDesc;
+	}
+
+	/**
+	 * Zwraca tablicę z uprawnieniami grupy
+	 *
+	 * @param 	Group	$oGroup	obiekt grupy
+	 * @return	array
+	 */
+	static public function getGroupPrivileges(Group $oGroup)
+	{
+		$oDb = Zend_Registry::get('db');
+
+		$aDbRes = $oDb->select()
+							->from('group_privileges', 'privilege')
+							->where('group_id = ?', $oGroup->getId())
+							->distinct()->query()->fetchAll(Zend_Db::FETCH_COLUMN);
+
+		return $aDbRes;
 	}
 
 	/**

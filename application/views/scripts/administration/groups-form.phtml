@@ -1,0 +1,35 @@
+<?php $this->layoutClass()->contentWrapper('admin')?>
+
+<div class="content">
+	<header>
+		<h2>Administracja - <?php echo $this->bEdit ? 'edycja grupy' : 'nowa grupa'?></h2>
+	</header>
+	<div>
+		<form method="post" action="">
+			<?php $sField = 'name';
+			echo $this->formField(
+				'nazwa grupy',
+				$sField,
+				$this->formText($sField, $this->formValue($sField))
+			)?>
+
+			<?php $sField = 'desc';
+			echo $this->formField(
+				'opis',
+				$sField,
+				$this->formTextarea($sField, $this->formValue($sField), array('cols' => 70, 'rows' => 5))
+			)?>
+
+			<?php $sField = 'priv';
+			echo $this->formField(
+				'uprawnienia',
+				$sField,
+				$this->formMultiCheckbox($sField, $this->formValue($sField), array(), Privileges::getGlobal()),
+				array('class' => 'multi')
+			)?>
+
+			<button type="submit"><?php echo $this->bEdit ? 'zapisz' : 'dodaj'?></button>
+		</form>
+	</div>
+</div>
+<?php echo $this->sidebarAdmin()?>

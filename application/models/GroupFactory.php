@@ -85,11 +85,11 @@ class GroupFactory extends Core_DataObject_Factory
 
 		if(is_array($mOption) && in_array('projPag', $mOption))
 		{
-			$oSelect->join(
+			$oSelect->joinLeft(
 				'group_privileges AS gp',
 				'groups.group_id = gp.group_id',
 				new Zend_Db_Expr("GROUP_CONCAT(DISTINCT gp.privilege SEPARATOR ';') AS priv")
-			)->join(
+			)->joinLeft(
 				'user_groups AS ug',
 				'groups.group_id = ug.group_id',
 				new Zend_Db_Expr('COUNT(ug.user_id) AS users_count')

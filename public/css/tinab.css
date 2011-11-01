@@ -162,6 +162,14 @@ body > header .main-nav ul li.current a {
 	color: #ff3434;
 }
 /* @end =messenger */
+/* @group =pagination */
+.pagination {
+	font-size: 11px;
+}
+.pagination ul li {
+	display: inline;
+}
+/* @end =pagination */
 /* @group =form */
 .error-inline {
 	display: none;
@@ -204,6 +212,10 @@ form button[type="submit"] {
 form button[type="submit"]:hover {
 	background-color: #bfbfbf;
 }
+form .multi p > label {
+	width: auto;
+	float: none;
+}
 /* @end =form */
 /* @group =site-login */
 .login .content {
@@ -219,10 +231,10 @@ form button[type="submit"]:hover {
 .admin .content {
 	width: 700px;
 }
-.admin .content > header h2{
+.admin .content > header.menu h2 {
 	float: left;
 }
-.admin .content > header a{
+.admin .content > header.menu a {
 	float: right;
 	text-decoration: none;
 }
@@ -243,5 +255,14 @@ form button[type="submit"]:hover {
 	display: inline;
 	font-size: 12px;
 	padding-left: 10px;
+}
+.admin form label {
+	width: 130px;
+}
+.admin form .error-inline {
+	margin-left: 130px;
+}
+form button[type="submit"] {
+	margin-left: 130px;
 }
 /* @end =site-admin */

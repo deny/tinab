@@ -1,10 +1,10 @@
 <?php $this->layoutClass()->contentWrapper('admin')?>
 
 <div class="content">
-	<header>
+	<header class="menu">
 		<h2>Administracja - grupy</h2>
 		<a href="/administration/groups-add">+nowa grupa</a>
-		<div class="clear" />
+		<div class="clear"></div>
 	</header>
 	<div>
 		<?php foreach($this->oPaginator as $oItem):?>
@@ -18,13 +18,13 @@
 				<strong>liczba użytkowników:</strong>
 				<?php echo $oItem->getUsersCount()?>
 				<strong>uprawnienia:</strong>
-				<?php echo implode(',', $this->privilegesDesc($oItem->getPrivileges()))?>
+				<?php echo implode(', ', $this->privilegesDesc($oItem->getPrivileges()))?>
 			</p>
 			<p>
 				<a href="#">zobacz użytkowników</a> |
 				<a href="#">dodaj użytkownika</a> |
-				<a href="#">edytuj grupę</a> |
-				<a href="#">usuń grupę</a>
+				<a href="/administration/groups-edit/id/<?php echo $oItem->getId() ?>">edytuj grupę</a> |
+				<a href="#/administration/groups-delete/id/<?php echo $oItem->getId() ?>" class="confirm" data-confirm="Czy na pewno chcesz usunąć tą grupę?">usuń grupę</a>
 			</p>
 		</article>
 		<?php endforeach;?>

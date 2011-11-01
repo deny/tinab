@@ -86,7 +86,7 @@ class Group extends Core_DataObject
 	 */
 	public function getId()
 	{
-		return $this->iGroupId;
+		return $this->iId;
 	}
 
 	/**
@@ -126,6 +126,11 @@ class Group extends Core_DataObject
 	 */
 	public function getPrivileges()
 	{
+		if($this->aPrivileges === null)
+		{
+			$this->aPrivileges = Privileges::getGroupPrivileges($this);
+		}
+
 		return $this->aPrivileges;
 	}
 
@@ -175,6 +180,38 @@ class Group extends Core_DataObject
 	{
 		$this->iProjectId = $iProjectId;
 		$this->setDataValue('project_id', $iProjectId);
+	}
+
+	/**
+	 * Ustawia uprawnienia grupy
+	 *
+	 * @return	void
+	 */
+	public function setPrivileges(array $aPriv)
+	{
+		$this->aPrivileges = $aPriv;
+
+		// tworzenie zapytania
+		$sQuery = 'INSERT INTO group_privileges VALUES ';
+		foreach($aPriv as $sPriv)
+		{
+			$sQuery .= '(' . $this->iId . ', "'. $sPriv . '"),';
+		}
+		$sQuery = rtrim($sQuery, ',');
+
+		// transkacja ustawiająca nowe uprawnienia
+		try
+		{
+			$this->oDb->beginTransaction();
+			$this->oDb->delete('group_privileges', 'group_id = ' . $this->getId());
+			$this->oDb->query($sQuery);
+			$this->oDb->commit();
+		}
+		catch(Exception $oExc)
+		{
+			$this->oDb->rollBack();
+			throw $oExc;
+		}
 	}
 
 }
