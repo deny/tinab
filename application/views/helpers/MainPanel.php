@@ -6,8 +6,9 @@
 class View_Helper_MainPanel extends Zend_View_Helper_Abstract
 {
 	protected $aMenu = array(
-		'index' => array('Podsumowanie', '/summary'),
-		'tasks' => array('Zadania', '#')
+		'summary' 	=> array('Podsumowanie', '/summary'),
+		'#1' 		=> array('Zadania', '#'),
+		'#2' 		=> array('Wiadomości', '#')
 	);
 	/**
 	 * Obiekt zalogowanego usera
@@ -52,13 +53,12 @@ class View_Helper_MainPanel extends Zend_View_Helper_Abstract
 				$sClass = ' class="current" ';
 			}
 
-			$sResult .= '<li' . $sClass . '><a href="'. $aInfo[1] . '">' . $aInfo[0] . '</a></li>';
+			$sResult .= '<li' . $sClass . '><a href="'. $aInfo[1] . '">' . $aInfo[0] . '</a></li> ';
 		}
 
 		$sResult .= '</ul></div>';
 
 		return $sResult;
-
 	}
 
 	/**

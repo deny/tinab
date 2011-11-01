@@ -62,12 +62,20 @@ body {
 	margin: 0 auto;
 	background-color: #efefef;
 }
-body > header {
-	background: gray;
+body > header h1 {
+	background: none;
+	float: left;
+	padding: 2px 40px;
+	font-size: 25px;
+}
+body > header h1 a {
+	color: #000;
+	text-decoration: none;
 }
 .page-wrapper {
 	background-color: #e5e5e5;
 	clear: both;
+	padding-top: 2px;
 }
 /* @end =global-page */
 /* @group =page-header */
@@ -84,6 +92,7 @@ body > header .main-nav {
 	float: left;
 	width: 98%;
 	padding: 0 1%;
+	padding-top: 5px;
 }
 body > header .main-nav ul li {
 	display: inline-block;
@@ -97,8 +106,12 @@ body > header .main-nav ul li a {
 }
 body > header .main-nav ul li:hover,  
 body > header .main-nav ul li.current {
-	background-color: #d0d0d0;
+	background-color: #e5e5e5;
 }
+body > header .main-nav ul li:hover a,
+body > header .main-nav ul li.current a {
+	color: #888888;
+} 
 /* @end =page-header */
 /* @group =page-content */
 .content-wrapper {
