@@ -3,6 +3,8 @@
 <div class="content">
 	<header>
 		<h2>Administracja - grupy</h2>
+		<a href="/administration/groups-add">+nowa grupa</a>
+		<div class="clear" />
 	</header>
 	<div>
 		<?php foreach($this->oPaginator as $oItem):?>
@@ -12,17 +14,18 @@
 			<p>
 				<?php echo $oItem->getDescription()?>
 			</p>
-			<p><strong>Liczba użytkowników:</strong> <?php echo $oItem->getUsersCount()?></p>
 			<p>
-				<strong>Uprawnienia:</strong>
+				<strong>liczba użytkowników:</strong>
+				<?php echo $oItem->getUsersCount()?>
+				<strong>uprawnienia:</strong>
 				<?php echo implode(',', $this->privilegesDesc($oItem->getPrivileges()))?>
 			</p>
 			<p>
-				<a href="#">edytuj grupę</a> |
+				<a href="#">zobacz użytkowników</a> |
 				<a href="#">dodaj użytkownika</a> |
+				<a href="#">edytuj grupę</a> |
 				<a href="#">usuń grupę</a>
 			</p>
-
 		</article>
 		<?php endforeach;?>
 
@@ -31,9 +34,9 @@
 					'Sliding',
 					'app-partials/paginator.phtml',
 					array(
-						'pname'		=> 'strona',
+						'pname'		=> 'page',
 						'pcount'	=> 6,
-						'actionUrl'	=> '/diety/lista'
+						'actionUrl'	=> '/administration/groups'
 					)
 		);?>
 	</div>

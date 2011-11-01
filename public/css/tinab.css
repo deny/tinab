@@ -219,6 +219,13 @@ form button[type="submit"]:hover {
 .admin .content {
 	width: 700px;
 }
+.admin .content > header h2{
+	float: left;
+}
+.admin .content > header a{
+	float: right;
+	text-decoration: none;
+}
 .admin .sidebar {
 	width: 240px;
 }
