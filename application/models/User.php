@@ -60,6 +60,13 @@ class User extends Core_DataObject
 	protected $sSurname;
 
 	/**
+	 * Tablica na obiekty grup globalnych do których należy user
+	 *
+	 * @var	array
+	 */
+	protected $aGlobalGroups = null;
+
+	/**
 	 * Konstruktor
 	 *
 	 * @param	int		$iId		id usera
@@ -69,9 +76,10 @@ class User extends Core_DataObject
 	 * @param	string	$sSalt		sól
 	 * @param	string	$sName		imię
 	 * @param	string	$sSurname	nazwisko
+	 * @param	array	$aPreload	tablica z preloadem
 	 * @return	User
 	 */
-	public function __construct($iId, $sStatus, $sEmail, $sPasswd, $sSalt, $sName, $sSurname)
+	public function __construct($iId, $sStatus, $sEmail, $sPasswd, $sSalt, $sName, $sSurname, $aPreload = array())
 	{
 		parent::__construct('users', array('user_id' => $iId));
 
@@ -82,6 +90,11 @@ class User extends Core_DataObject
 		$this->sSalt = $sSalt;
 		$this->sName = $sName;
 		$this->sSurname = $sSurname;
+
+		if(isset($aPreload['globalGroups']))
+		{
+			$this->aGlobalGroups = $aPreload['globalGroups'];
+		}
 	}
 
 // gettery
@@ -155,6 +168,21 @@ class User extends Core_DataObject
 	public function getPrivileges($iProjectId = null)
 	{
 		return Privileges::getUserPrivileges($this, $iProjectId);
+	}
+
+	/**
+	 * Zwraca grupy do których należy user
+	 *
+	 * @return	array
+	 */
+	public function getGlobalGroups()
+	{
+		if($this->aGlobalGroups === null)
+		{
+			$this->aGlobalGroups = GroupFactory::getNew()->getForUser($this);
+		}
+
+		return $this->aGlobalGroups;
 	}
 
 	/**

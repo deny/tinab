@@ -144,6 +144,16 @@ class Group extends Core_DataObject
 		return $this->iUsersCount;
 	}
 
+	/**
+	 * Wyświetlanie grupy
+	 *
+	 * @return	string
+	 */
+	public function __toString()
+	{
+		return $this->getName();
+	}
+
 // settery
 
 	/**

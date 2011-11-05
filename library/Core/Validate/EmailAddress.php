@@ -10,15 +10,15 @@ class Core_Validate_EmailAddress extends Zend_Validate_EmailAddress
      * @var array
      */
     protected $_messageTemplates = array(
-			self::INVALID				=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
-			self::INVALID_FORMAT		=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
-			self::INVALID_HOSTNAME		=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
-			self::INVALID_MX_RECORD		=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
-			self::DOT_ATOM				=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
-			self::QUOTED_STRING			=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
-			self::INVALID_LOCAL_PART	=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
-			self::LENGTH_EXCEEDED		=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com'
-		);
+		self::INVALID				=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
+		self::INVALID_FORMAT		=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
+		self::INVALID_HOSTNAME		=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
+		self::INVALID_MX_RECORD		=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
+		self::DOT_ATOM				=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
+		self::QUOTED_STRING			=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
+		self::INVALID_LOCAL_PART	=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com',
+		self::LENGTH_EXCEEDED		=> 'Podaj prawidłowy e-mail w formacie nazwa@domena.com'
+	);
 
 	/**
 	 * Zwraca błędy tylko z walidatora emaili (uwua dodatkowe błędy z walidatora hostname)

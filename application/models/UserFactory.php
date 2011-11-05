@@ -72,7 +72,63 @@ class UserFactory extends Core_DataObject_Factory
 	{
 		$oWhere = new Core_DataObject_Where('users.status != ?', User::STATUS_DELETED);
 
-		return $this->getPaginator($iPage, $iCount, array('email'), $oWhere);
+		return $this->getPaginator($iPage, $iCount, array('email'), $oWhere, array('preloadGlobalGroups' => true));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see Core_DataObject_Factory::getPage()
+	 */
+	public function getPage($iPage, $iCount, array $aOrder = array(), $mWhere = null, $mOption = null)
+	{
+		if(!isset($mOption['preloadGlobalGroups']))
+		{
+			return parent::getPage($iPage, $iCount, $aOrder, $mWhere);
+		}
+
+		$oSelect = $this->getSelect('*', $mOption);
+		$oSelect->limitPage($iPage, $iCount);
+
+		// adds order
+		foreach($aOrder as $sOrder)
+		{
+			$oSelect->order($sOrder);
+		}
+
+		// adds where
+		if($mWhere !== null)
+		{
+			if($mWhere instanceof Core_DataObject_Where)
+			{
+				$mWhere = $mWhere->getWhere();
+			}
+
+			$oSelect->where($mWhere);
+		}
+
+		$aResult = $oSelect->query()->fetchAll();
+
+		if(empty($aResult))
+		{
+			return array();
+		}
+
+		// ustalenie ID pobranych userów
+		$aIds = array();
+		foreach($aResult as $aRow)
+		{
+			$aIds[] = $aRow['user_id'];
+		}
+
+		// pobranie grup dla userów
+		$aGroups = GroupFactory::getNew()->getForUsers($aIds);
+
+		foreach($aResult as $iKey => $aRow)
+		{
+			$aResult[$iKey]['global_group_preload'] = $aGroups[$aRow['user_id']];
+		}
+
+		return $this->createList($aResult, $mOption);
 	}
 
 // PRYWATNE FUNKCJE FABRYKI
@@ -83,6 +139,13 @@ class UserFactory extends Core_DataObject_Factory
 	 */
 	protected function createObject(array $aRow, $mOption = null)
 	{
+		$aPreload = array();
+
+		if(isset($aRow['global_group_preload']))
+		{
+			$aPreload['globalGroups'] = $aRow['global_group_preload'];
+		}
+
 		return new User(
 			$aRow['user_id'],
 			$aRow['status'],
@@ -90,7 +153,8 @@ class UserFactory extends Core_DataObject_Factory
 			$aRow['passwd'],
 			$aRow['salt'],
 			$aRow['name'],
-			$aRow['surname']
+			$aRow['surname'],
+			$aPreload
 		);
 	}
 

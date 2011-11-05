@@ -16,7 +16,9 @@
 				<?php echo $oItem->getEmail()?>
 				<strong>status:</strong>
 				<?php echo $this->userStatus($oItem)?>
-
+				<br />
+				<strong>grupy:</strong>
+				<?php echo mb_strtolower(implode(', ', $oItem->getGlobalGroups()), 'UTF-8')?>
 			</p>
 			<p>
 				<a href="#">edytuj grupy</a> |

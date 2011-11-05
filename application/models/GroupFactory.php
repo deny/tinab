@@ -36,6 +36,68 @@ class GroupFactory extends Core_DataObject_Factory
 	}
 
 	/**
+	 * Zwraca grupy dla usera
+	 *
+	 * @param	User	$oUser		obiekt usera
+	 * @param	int		$iProjectId	id projektu (null dla grupy globalnej)
+	 * @return	array
+	 */
+	public function getForUser(User $oUser, $iProjectId = null)
+	{
+		$oWhere = new Core_DataObject_Where('ug.user_id = ?', $oUser->getId());
+		if(isset($iProjectId))
+		{
+			$oWhere->addAnd('groups.project_id = ?', $iProjectId);
+		}
+
+		$aDbRes = $this->getSelect()
+						->join('user_groups AS ug', 'ug.group_id = groups.group_id', '')
+						->where($oWhere->getWhere())
+						->order('name')
+						->query()->fetchAll();
+
+		return $this->createList($aDbRes);
+	}
+
+	/**
+	 * Zwraca grupy dla userów o podanych ID
+	 * Tablica wynikowa jest indeksowana przy pomocy ID userów
+	 *
+	 * @param	array	$aIds	tablica z ID userów
+	 * @return	array
+	 */
+	public function getForUsers(array $aIds, $iProjectId = null)
+	{
+		$oWhere = new Core_DataObject_Where('ug.user_id IN (?)', $aIds);
+		if(isset($iProjectId))
+		{
+			$oWhere->addAnd('groups.project_id = ?', $iProjectId);
+		}
+
+		$aDbRes = $this->getSelect('groups.*, GROUP_CONCAT(ug.user_id) AS users')
+						->join('user_groups AS ug', 'ug.group_id = groups.group_id', '')
+						->where($oWhere->getWhere())
+						->order('name')
+						->group('groups.group_id')
+						->query()->fetchAll();
+
+		$aResult = array_fill_keys($aIds, array());
+
+		// rozdzielanie grup dla poszczególnych userów
+		foreach($aDbRes as $aRow)
+		{
+			$oGroup = $this->createObject($aRow);
+
+			foreach(explode(',', $aRow['users']) as $iUserId)
+			{
+				$aResult[$iUserId][] = $oGroup;
+			}
+		}
+
+		return $aResult;
+	}
+
+	/**
 	 * Zwraca paginator z grupami dla wybranego projektu
 	 *
 	 * @param	int		$iPage		numer strony

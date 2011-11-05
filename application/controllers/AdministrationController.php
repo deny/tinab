@@ -168,6 +168,15 @@ class AdministrationController extends Core_Controller_Action
 		$this->_redirect('/administration/users');
 	}
 
+	/**
+	 *
+	 * Enter description here ...
+	 */
+	public function useresGroupsAction()
+	{
+
+	}
+
 // ---------------  GRUPY ----------------------
 
 	/**
@@ -385,6 +394,7 @@ class AdministrationController extends Core_Controller_Action
 		$aValidators = array(
 			'email'	=> array(
 				new Core_Validate_EmailAddress(),
+				new Core_Validate_EmailUnique(),
 				new Core_Validate_StringLength(array('min' => 1, 'max' => 50))
 			),
 			'name'	=> array(
