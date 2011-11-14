@@ -3,14 +3,14 @@
 /**
  * Helper zwracający sidebara dla adminki
  */
-class View_Helper_SidebarAdmin extends Zend_View_Helper_Abstract
+class View_Helper_Sidebar_Admin extends Zend_View_Helper_Abstract
 {
 	/**
 	 * Funkcja helpera
 	 *
 	 * @return	string
 	 */
-	public function sidebarAdmin()
+	public function sidebar_Admin()
 	{
 		return '<div class="sidebar">
 	<div class="box">

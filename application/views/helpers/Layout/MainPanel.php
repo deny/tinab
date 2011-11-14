@@ -3,7 +3,7 @@
 /**
  * Wyświetla główny (górny) panel nawigacyjny serwisu
  */
-class View_Helper_MainPanel extends Zend_View_Helper_Abstract
+class View_Helper_Layout_MainPanel extends Zend_View_Helper_Abstract
 {
 	/**
 	 * Główne menu
@@ -28,7 +28,7 @@ class View_Helper_MainPanel extends Zend_View_Helper_Abstract
 	 *
 	 * @return	string
 	 */
-	public function mainPanel()
+	public function layout_MainPanel()
 	{
 		$this->oUser = Core_Auth::getInstance()->getUser();
 

@@ -3,7 +3,7 @@
 /**
  * Helper wyświetlający pole formularza
  */
-class View_Helper_FormField extends Zend_View_Helper_Abstract
+class View_Helper_Form_Field extends Zend_View_Helper_Abstract
 {
 	/**
 	 * Funkcja helpera
@@ -15,20 +15,18 @@ class View_Helper_FormField extends Zend_View_Helper_Abstract
 	 * @param	array	$aOptions	opcje dodatkowe
 	 * @return	string
 	 */
-	public function formField($sLabel, $sName, $sField, $aAttribs = array(), $aOptions = array())
+	public function form_Field($sLabel, $sName, $sField, $aAttribs = array(), $aOptions = array())
 	{
 		// pobranie błędów walidacji
-		$sErrors =  $this->view->formFieldErrors($sName);
+		$sErrors =  $this->view->form_FieldErrors($sName);
 		$bFlip = isset($aOptions['flip']) && $aOptions['flip'];
-
-
 
 		// tag otwierający pole
 		$sResult = '<div' . $this->getAttribs($aAttribs, !empty($sErrors), $bFlip) . ' >';
 
 			// opis i pole
 			$sLabel = '<label for="' . $sName . '">' . $sLabel . '</label>';
-			$sField = '<p>'. $sField .'</p>';
+			$sField = '<span>'. $sField .'</span>';
 
 			// dodanie do wyniku (odwrotna kolejność label<->pole)
 			$sResult .= $bFlip ? $sField . $sLabel : $sLabel . $sField;

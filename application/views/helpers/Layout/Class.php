@@ -3,16 +3,21 @@
 /**
  * Helper do zmiany klas w layoucie
  */
-class View_Helper_LayoutClass extends Zend_View_Helper_Abstract
+class View_Helper_Layout_Class extends Zend_View_Helper_Abstract
 {
+	/**
+	 * Domyślna klasa
+	 *
+	 * @var	string
+	 */
 	protected $sContentWrapper = 'content-wrapper';
 
 	/**
 	 * Funkcja helpera (zwraca obiekt helpera
 	 *
-	 * @return	View_Helper_LayoutClass
+	 * @return	View_Helper_Layout_Class
 	 */
-	public function layoutClass()
+	public function layout_Class()
 	{
 		return $this;
 	}
@@ -22,7 +27,7 @@ class View_Helper_LayoutClass extends Zend_View_Helper_Abstract
 	 * Wywołąna bez parametrów zwraca ustowione klasy
 	 *
 	 * @param	string	$sClass	dodatkowe klasy
-	 * @return	string|View_Helper_LayoutClass
+	 * @return	string|View_Helper_Layout_Class
 	 */
 	public function contentWrapper($sClass = null)
 	{

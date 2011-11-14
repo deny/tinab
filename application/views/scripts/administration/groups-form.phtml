@@ -1,4 +1,4 @@
-<?php $this->layoutClass()->contentWrapper('admin')?>
+<?php $this->layout_Class()->contentWrapper('admin')?>
 
 <div class="content">
 	<header>
@@ -7,24 +7,24 @@
 	<div>
 		<form method="post" action="">
 			<?php $sField = 'name';
-			echo $this->formField(
+			echo $this->form_Field(
 				'nazwa grupy',
 				$sField,
-				$this->formText($sField, $this->formValue($sField))
+				$this->formText($sField, $this->form_Value($sField))
 			)?>
 
 			<?php $sField = 'desc';
-			echo $this->formField(
+			echo $this->form_Field(
 				'opis',
 				$sField,
-				$this->formTextarea($sField, $this->formValue($sField), array('cols' => 70, 'rows' => 5))
+				$this->formTextarea($sField, $this->form_Value($sField), array('cols' => 70, 'rows' => 5))
 			)?>
 
 			<?php $sField = 'priv';
-			echo $this->formField(
+			echo $this->form_Field(
 				'uprawnienia',
 				$sField,
-				$this->formMultiCheckbox($sField, $this->formValue($sField), array(), Privileges::getGlobal()),
+				$this->form_MultiCheckbox($sField, $this->form_Value($sField), array(), Privileges::getGlobal()),
 				array('class' => 'multi')
 			)?>
 
@@ -32,4 +32,4 @@
 		</form>
 	</div>
 </div>
-<?php echo $this->sidebarAdmin()?>
+<?php echo $this->sidebar_Admin()?>

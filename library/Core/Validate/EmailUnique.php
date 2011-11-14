@@ -5,7 +5,19 @@
  */
 class Core_Validate_EmailUnique extends Zend_Validate_Abstract
 {
+	/**
+	 * Stała określajaca błąð
+	 *
+	 * @var	string
+	 */
 	const NOT_UNIQUE = 'email_not_unique';
+
+	/**
+	 * Obiekt edytowanego usera (pomijamy jego emaila)
+	 *
+	 * @var	User
+	 */
+	protected $oUser;
 
 	/**
 	 * Tablica z komunikatami
@@ -14,6 +26,17 @@ class Core_Validate_EmailUnique extends Zend_Validate_Abstract
     protected $_messageTemplates = array(
 		self::NOT_UNIQUE => 'Podany email występuje już w bazie',
 	);
+
+	/**
+	 * Konstuktor
+	 *
+	 * @param	User	$oUser	obiekt edytowanego usera (pomijamy jego emaila)
+	 * @return	Core_Validate_EmailUnique
+	 */
+	public function __construct($oUser)
+	{
+		$this->oUser = $oUser;
+	}
 
 	/**
 	 * (non-PHPdoc)
@@ -25,6 +48,11 @@ class Core_Validate_EmailUnique extends Zend_Validate_Abstract
 		{
 			$this->_error(self::NOT_UNIQUE);
 			return false;
+		}
+
+		if(isset($this->oUser) && $this->oUser->getEmail() == $sValue)
+		{
+			return true;
 		}
 
 		$oDb = Zend_Registry::get('db');

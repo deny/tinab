@@ -120,6 +120,28 @@ class GroupFactory extends Core_DataObject_Factory
 	}
 
 	/**
+	 * Zwraca tablicę (id => nazwa) grup
+	 *
+	 * @param	int	$iProjectId	id projetku
+	 * @return	array
+	 */
+	public function getList($iProjectId = null)
+	{
+		$oSelect = $this->getSelect(array('group_id', 'name'))->order('name');
+
+		if($iProjectId === null)
+		{
+			$oSelect->where('project_id IS NULL');
+		}
+		else
+		{
+			$oSelect->where('project_id = ?', $iProjectId);
+		}
+
+		return $this->oDb->fetchPairs($oSelect);
+	}
+
+	/**
 	 * (non-PHPdoc)
 	 * @see Core_DataObject_Factory::getCountSelect()
 	 */

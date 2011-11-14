@@ -1,17 +1,17 @@
-<?php 
+<?php
 
 /**
  * Zwraca html'a z błędami dla wybranego pola
  */
-class View_Helper_FormFieldErrors extends Zend_View_Helper_Abstract
+class View_Helper_Form_FieldErrors extends Zend_View_Helper_Abstract
 {
 	/**
 	 * Funkcja helpera
-	 * 
+	 *
 	 * @param	string	$sField	nazwa pola
 	 * @return	string
 	 */
-	public function formFieldErrors($sField)
+	public function form_FieldErrors($sField)
 	{
 		$sResult = '';
 		if(!empty($this->view->aErrors[$sField]))

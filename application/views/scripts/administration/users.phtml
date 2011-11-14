@@ -1,4 +1,4 @@
-<?php $this->layoutClass()->contentWrapper('admin')?>
+<?php $this->layout_Class()->contentWrapper('admin')?>
 
 <div class="content">
 	<header class="menu">
@@ -10,7 +10,6 @@
 		<?php foreach($this->oPaginator as $oItem):?>
 		<article>
 			<h4><?php echo $oItem->getNick()?> </h4>
-
 			<p>
 				<strong>email:</strong>
 				<?php echo $oItem->getEmail()?>
@@ -21,7 +20,7 @@
 				<?php echo mb_strtolower(implode(', ', $oItem->getGlobalGroups()), 'UTF-8')?>
 			</p>
 			<p>
-				<a href="#">edytuj grupy</a> |
+				<a href="/administration/users-groups/id/<?php echo $oItem->getId() ?>">edytuj grupy</a> |
 		<?php if($oItem->getStatus() == User::STATUS_ACTIVE):?>
 				<a href="/administration/users-status/id/<?php echo $oItem->getId() ?>">deaktywuj</a> |
 		<?php else:?>
@@ -45,4 +44,4 @@
 		);?>
 	</div>
 </div>
-<?php echo $this->sidebarAdmin()?>
+<?php echo $this->sidebar_Admin()?>

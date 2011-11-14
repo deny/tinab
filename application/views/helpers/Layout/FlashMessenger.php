@@ -3,14 +3,14 @@
 /**
  * Helper wyświetlajacy komunikaty z Flash Messengera
  */
-class View_Helper_FlashMessenger extends Zend_View_Helper_Abstract
+class View_Helper_Layout_FlashMessenger extends Zend_View_Helper_Abstract
 {
 	/**
 	 * Funkcja helpera
 	 *
 	 * @return	string
 	 */
-	public function flashMessenger()
+	public function layout_FlashMessenger()
 	{
 		$sResult = '';
 		$oMsg = new Core_Controller_Action_Helper_FlashMessenger();

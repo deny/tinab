@@ -1,4 +1,4 @@
-<?php $this->layoutClass()->contentWrapper('login')?>
+<?php $this->layout_Class()->contentWrapper('login')?>
 
 <header>
 	<h2>Logowanie</h2>
@@ -7,24 +7,24 @@
 	<form method="post" action="/">
 
 		<?php $sField = 'email';
-		echo $this->formField(
+		echo $this->form_Field(
 			'email',
 			$sField,
-			$this->formText($sField, $this->formValue($sField))
+			$this->formText($sField, $this->form_Value($sField))
 		)?>
 
 		<?php $sField = 'passwd';
-		echo $this->formField(
+		echo $this->form_Field(
 			'hasło',
 			$sField,
-			$this->formPassword($sField, $this->formValue($sField))
+			$this->formPassword($sField, $this->form_Value($sField))
 		)?>
 
 		<?php $sField = 'remember';
-		echo $this->formField(
+		echo $this->form_Field(
 			'Zapamiętaj mnie',
 			$sField,
-			$this->formCheckbox($sField, $this->formValue($sField)),
+			$this->formCheckbox($sField, $this->form_Value($sField)),
 			array('class' => 'remember'),
 			array('flip' => true)
 		)?>

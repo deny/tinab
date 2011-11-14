@@ -1,0 +1,27 @@
+<?php $this->layout_Class()->contentWrapper('admin')?>
+
+<div class="content">
+	<header>
+		<h2>Administracja - edycja grup</h2>
+	</header>
+	<div>
+		<p>
+			<strong>użytkownik:</strong>
+			<?php echo $this->oUser->getNick() ?>
+			<strong>email:</strong>
+			<?php  echo $this->oUser->getEmail()?>
+		</p>
+		<br />
+		<form method="post" action="" autocomplete="off">
+			<?php $sField = 'groups';
+			echo $this->form_Field(
+				'Grupy użytkownika',
+				$sField,
+				$this->form_MultiChoose($sField, $this->form_Value($sField, array()), array(), $this->aGroups)
+			)?>
+			<button type="submit">zapisz</button>
+		</form>
+	</div>
+</div>
+
+<?php echo $this->sidebar_Admin()?>

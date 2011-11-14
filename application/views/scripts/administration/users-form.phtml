@@ -1,4 +1,4 @@
-<?php $this->layoutClass()->contentWrapper('admin')?>
+<?php $this->layout_Class()->contentWrapper('admin')?>
 
 <div class="content">
 	<header>
@@ -7,35 +7,35 @@
 	<div>
 		<form method="post" action="" autocomplete="off">
 			<?php $sField = 'name';
-			echo $this->formField(
+			echo $this->form_Field(
 				'imię',
 				$sField,
-				$this->formText($sField, $this->formValue($sField))
+				$this->formText($sField, $this->form_Value($sField))
 			)?>
 
 			<?php $sField = 'surname';
-			echo $this->formField(
+			echo $this->form_Field(
 				'nazwisko',
 				$sField,
-				$this->formText($sField, $this->formValue($sField))
+				$this->formText($sField, $this->form_Value($sField))
 			)?>
 
 			<?php $sField = 'email';
-			echo $this->formField(
+			echo $this->form_Field(
 				'email',
 				$sField,
-				$this->formText($sField, $this->formValue($sField))
+				$this->formText($sField, $this->form_Value($sField))
 			)?>
 
 			<?php $sField = 'passwd';
-			echo $this->formField(
+			echo $this->form_Field(
 				$this->bEdit ? 'nowe hasło' : 'hasło',
 				$sField,
 				$this->formPassword($sField)
 			)?>
 
 			<?php $sField = 'passwd2';
-			echo $this->formField(
+			echo $this->form_Field(
 				'powtórz hasło',
 				$sField,
 				$this->formPassword($sField)
@@ -45,4 +45,4 @@
 		</form>
 	</div>
 </div>
-<?php echo $this->sidebarAdmin()?>
+<?php echo $this->sidebar_Admin()?>

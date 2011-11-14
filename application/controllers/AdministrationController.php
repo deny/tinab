@@ -18,7 +18,7 @@ class AdministrationController extends Core_Controller_Action
 			array(
 				'index',
 				'groups', 'groups-add', 'groups-edit', 'groups-delete',
-				'users', 'users-add', 'users-edit', 'users-delete', 'users-status'
+				'users', 'users-add', 'users-edit', 'users-delete', 'users-status', 'users-groups'
 			),
 			array(Privileges::ADMIN)
 		);
@@ -92,7 +92,7 @@ class AdministrationController extends Core_Controller_Action
 
 		if($this->_request->isPost()) // submit formularza
 		{
-			$oFilter = $this->getUserFilter(true);
+			$oFilter = $this->getUserFilter($oUser);
 
 			if($oFilter->isValid()) // dane poprawne
 			{
@@ -172,9 +172,28 @@ class AdministrationController extends Core_Controller_Action
 	 *
 	 * Enter description here ...
 	 */
-	public function useresGroupsAction()
+	public function usersGroupsAction()
 	{
+		$oUser = $this->getUser();
 
+		if($this->_request->isPost())
+		{
+
+		}
+		else // jeśli brak posta to przekazujemy do formularza dane usera
+		{
+			$aIds = array();
+			foreach($oUser->getGlobalGroups() as $oGroup)
+			{
+				$aIds[] = $oGroup->getId();
+			}
+
+			$this->view->assign('aValues', array(
+				'groups' => $aIds
+			));
+		}
+		$this->view->assign('oUser', $oUser);
+		$this->view->assign('aGroups', GroupFactory::getNew()->getList());
 	}
 
 // ---------------  GRUPY ----------------------
@@ -381,9 +400,10 @@ class AdministrationController extends Core_Controller_Action
 	/**
 	 * Zwraca filtr dla userów
 	 *
+	 * @param	User	$oUser	obiekt edytowanego usera
 	 * @return	Zend_Filter_Input
 	 */
-	protected function getUserFilter($bEdit = false)
+	protected function getUserFilter($oUser = null)
 	{
 		$aValues = $this->_request->getPost();
 
@@ -394,7 +414,7 @@ class AdministrationController extends Core_Controller_Action
 		$aValidators = array(
 			'email'	=> array(
 				new Core_Validate_EmailAddress(),
-				new Core_Validate_EmailUnique(),
+				new Core_Validate_EmailUnique($oUser),
 				new Core_Validate_StringLength(array('min' => 1, 'max' => 50))
 			),
 			'name'	=> array(
@@ -412,7 +432,7 @@ class AdministrationController extends Core_Controller_Action
 			)
 		);
 
-		if($bEdit)
+		if(isset($oUser))
 		{
 			$aValidators['passwd']['allowEmpty'] = true;
 			$aValidators['passwd2']['allowEmpty'] = true;
