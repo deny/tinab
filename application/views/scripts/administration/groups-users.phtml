@@ -1,0 +1,25 @@
+<?php $this->layout_Class()->contentWrapper('admin')?>
+
+<div class="content">
+	<header>
+		<h2>Administracja - przydzielanie userów do grupy</h2>
+	</header>
+	<div>
+		<p>
+			<strong>grupa:</strong>
+			<?php echo $this->oGroup->getName() ?>
+		</p>
+		<br />
+		<form method="post" action="" autocomplete="off">
+			<?php $sField = 'users';
+			echo $this->form_Field(
+				'Grupy użytkownika',
+				$sField,
+				$this->form_MultiChoose($sField, $this->form_Value($sField, array()), array(), $this->aUsers)
+			)?>
+			<button type="submit">zapisz</button>
+		</form>
+	</div>
+</div>
+
+<?php echo $this->sidebar_Admin()?>

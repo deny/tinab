@@ -17,7 +17,7 @@ class AdministrationController extends Core_Controller_Action
 		$this->setAcl(
 			array(
 				'index',
-				'groups', 'groups-add', 'groups-edit', 'groups-delete',
+				'groups', 'groups-add', 'groups-edit', 'groups-delete', 'groups-users',
 				'users', 'users-add', 'users-edit', 'users-delete', 'users-status', 'users-groups'
 			),
 			array(Privileges::ADMIN)
@@ -169,16 +169,23 @@ class AdministrationController extends Core_Controller_Action
 	}
 
 	/**
-	 *
-	 * Enter description here ...
+	 * Zarządzanie grupami usera
 	 */
 	public function usersGroupsAction()
 	{
 		$oUser = $this->getUser();
+		$aGroups = GroupFactory::getNew()->getList();
 
 		if($this->_request->isPost())
 		{
+			$aNewIds = $this->_request->getPost('groups', array());
 
+			// wyjmujemy tylko poprawne ID
+			$aNewIds = array_intersect($aNewIds, array_keys($aGroups));
+
+			$oUser->resetGlobalGroups($aNewIds);
+			$this->_redirect('/administration/users');
+			exit();
 		}
 		else // jeśli brak posta to przekazujemy do formularza dane usera
 		{
@@ -192,8 +199,9 @@ class AdministrationController extends Core_Controller_Action
 				'groups' => $aIds
 			));
 		}
+
 		$this->view->assign('oUser', $oUser);
-		$this->view->assign('aGroups', GroupFactory::getNew()->getList());
+		$this->view->assign('aGroups', $aGroups);
 	}
 
 // ---------------  GRUPY ----------------------
@@ -309,6 +317,42 @@ class AdministrationController extends Core_Controller_Action
 		$this->_redirect('/administration/groups');
 	}
 
+	/**
+	 * Zarządzanie userami należącymi do grupy
+	 */
+	public function groupsUsersAction()
+	{
+		$oGroup = $this->getGroup();
+		$aUsers = UserFactory::getNew()->getList();
+
+		if($this->_request->isPost())
+		{
+			$aNewIds = $this->_request->getPost('users', array());
+
+			// wyjmujemy tylko poprawne ID
+			$aNewIds = array_intersect($aNewIds, array_keys($aUsers));
+
+			$oGroup->resetUsers($aNewIds);
+			$this->_redirect('/administration/groups');
+			exit();
+		}
+		else // jeśli brak posta to przekazujemy do formularza dane grupy
+		{
+			$aIds = array();
+			foreach($oGroup->getUsers() as $oUser)
+			{
+				$aIds[] = $oUser->getId();
+			}
+
+			$this->view->assign('aValues', array(
+				'users' => $aIds
+			));
+		}
+
+		$this->view->assign('oGroup', $oGroup);
+		$this->view->assign('aUsers', $aUsers);
+	}
+
 // FUNKCJE POMOCNICZE
 
 	/**
@@ -323,7 +367,7 @@ class AdministrationController extends Core_Controller_Action
 			$iId = (int) $this->_request->getParam('id', 0);
 			$oGroup = GroupFactory::getNew()->getOne($iId);
 
-			if($oGroup->getProjectId() != null) // jeśli nie ejst to grupa globalna
+			if($oGroup->getProjectId() != null) // jeśli nie jest to grupa globalna
 			{
 				throw new Exception();
 			}

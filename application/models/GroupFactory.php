@@ -176,8 +176,8 @@ class GroupFactory extends Core_DataObject_Factory
 			)->joinLeft(
 				'user_groups AS ug',
 				'groups.group_id = ug.group_id',
-				new Zend_Db_Expr('COUNT(ug.user_id) AS users_count')
-			)->group('groups.group_id');
+				new Zend_Db_Expr('COUNT(DISTINCT ug.user_id) AS users_count')
+			)->group('group_id');
 		}
 
 		return $oSelect;

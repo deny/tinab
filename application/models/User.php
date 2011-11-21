@@ -260,5 +260,48 @@ class User extends Core_DataObject
 		$this->setDataValue('surname', $sSurname);
 	}
 
+	/**
+	 * Ustawia ponownie globalne grupy usera
+	 *
+	 * @param	array	$aGroups	tablica z numerami ID grup
+	 * @return	void
+	 */
+	public function resetGlobalGroups(array $aGroups)
+	{
+		// wykonanie transakcji uaktualniającej globalne grupy usera
+		try
+		{
+			$this->oDb->beginTransaction();
+
+			// usunięcie dotychczasowych grup globalnych
+			$this->oDb->query(
+				'DELETE user_groups '.
+				'FROM user_groups JOIN groups ON groups.group_id = user_groups.group_id '.
+				'WHERE user_groups.user_id = '. $this->iId .' AND groups.project_id IS NULL'
+			);
+
+			if(!empty($aGroups))
+			{
+				// przygotowanie zapytania z insertem
+				$sInsert = 'INSERT INTO user_groups VALUES ';
+				foreach($aGroups as $iGroupId)
+				{
+					$sInsert .= '(' . $this->iId . ', ' . $iGroupId . '),';
+				}
+				$sInsert = rtrim($sInsert, ',');
+
+				$this->oDb->query($sInsert);
+			}
+
+			$this->oDb->commit();
+			$this->aGlobalGroups = null;
+		}
+		catch(Exception $oExc)
+		{
+			$this->oDb->rollBack();
+			throw $oExc;
+		}
+	}
+
 }
 

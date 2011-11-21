@@ -24,7 +24,7 @@
 			echo $this->form_Field(
 				'uprawnienia',
 				$sField,
-				$this->form_MultiCheckbox($sField, $this->form_Value($sField), array(), Privileges::getGlobal()),
+				$this->form_MultiChoose($sField, $this->form_Value($sField), array(), Privileges::getGlobal()),
 				array('class' => 'multi')
 			)?>
 

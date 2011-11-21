@@ -48,6 +48,13 @@ class Group extends Core_DataObject
 	protected $iUsersCount = null;
 
 	/**
+	 * Tablica na userów należących do grupy
+	 *
+	 * @var	array
+	 */
+	protected $aUsers = null;
+
+	/**
 	 * Konstruktor
 	 *
 	 * @param	int		$iId			id grupy
@@ -154,6 +161,21 @@ class Group extends Core_DataObject
 		return $this->getName();
 	}
 
+	/**
+	 * Zwraca userów z grupy
+	 *
+	 * @return	array
+	 */
+	public function getUsers()
+	{
+		if($this->aUsers === null)
+		{
+			$this->aUsers = UserFactory::getNew()->getForGroup($this);
+		}
+
+		return $this->aUsers;
+	}
+
 // settery
 
 	/**
@@ -216,6 +238,45 @@ class Group extends Core_DataObject
 			$this->oDb->delete('group_privileges', 'group_id = ' . $this->getId());
 			$this->oDb->query($sQuery);
 			$this->oDb->commit();
+		}
+		catch(Exception $oExc)
+		{
+			$this->oDb->rollBack();
+			throw $oExc;
+		}
+	}
+
+	/**
+	 * Ustawia ponownie członków grupy
+	 *
+	 * @param	array	$aUsers	tablica z numerami ID członków grupy
+	 * @return	void
+	 */
+	public function resetUsers(array $aUsers)
+	{
+		// wykonanie transakcji uaktualniającej grupę
+		try
+		{
+			$this->oDb->beginTransaction();
+
+			// usunięcie dotychczasowych userów
+			$this->oDb->delete('user_groups', 'group_id = '. $this->iId);
+
+			if(!empty($aUsers))
+			{
+				// przygotowanie zapytania z insertem
+				$sInsert = 'INSERT INTO user_groups VALUES ';
+				foreach($aUsers as $iUserId)
+				{
+					$sInsert .= '('. $iUserId .', '. $this->iId .' ),';
+				}
+				$sInsert = rtrim($sInsert, ',');
+
+				$this->oDb->query($sInsert);
+			}
+
+			$this->oDb->commit();
+			$this->aUsers = null;
 		}
 		catch(Exception $oExc)
 		{

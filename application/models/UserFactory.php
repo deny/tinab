@@ -42,6 +42,38 @@ class UserFactory extends Core_DataObject_Factory
 	}
 
 	/**
+	 * Zwraca tablicę (id => imię nazwisko)
+	 *
+	 * @return	array
+	 */
+	public function getList()
+	{
+		$oSelect = $this->getSelect(array('user_id', 'CONCAT(surname, name) AS nick'))
+						->order('nick');
+
+		return $this->oDb->fetchPairs($oSelect);
+	}
+
+	/**
+	 * Zwraca userów w grupie
+	 *
+	 * @param	Group	$oGroup		obiekt grupy
+	 * @return	array
+	 */
+	public function getForGroup(Group $oGroup)
+	{
+		$oWhere = new Core_DataObject_Where('ug.group_id = ?', $oGroup->getId());
+
+		$aDbRes = $this->getSelect()
+						->join('user_groups AS ug', 'ug.user_id = users.user_id', '')
+						->where($oWhere->getWhere())
+						->order(array('surname', 'name'))
+						->query()->fetchAll();
+
+		return $this->createList($aDbRes);
+	}
+
+	/**
 	 * Zwraca obiekt usera na podstawie emaila
 	 *
 	 * @param	string	$sEmail	adres email
