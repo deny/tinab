@@ -11,9 +11,9 @@ class View_Helper_Layout_MainPanel extends Zend_View_Helper_Abstract
 	 * @var	array
 	 */
 	protected $aMenu = array(
-		'summary' 	=> array('Podsumowanie', '/summary'),
-		'#1' 		=> array('Zadania', '#'),
-		'#2' 		=> array('Wiadomości', '#')
+		'default/summary' 	=> array('Podsumowanie', '/summary'),
+		'#1' 				=> array('Zadania', '#'),
+		'#2' 				=> array('Wiadomości', '#')
 	);
 
 	/**
@@ -37,7 +37,7 @@ class View_Helper_Layout_MainPanel extends Zend_View_Helper_Abstract
 
 		if(in_array(Privileges::ADMIN, $aPriv))
 		{
-			$this->aMenu['administration'] = array('Administracja', '/administration');
+			$this->aMenu['administration/*'] = array('Administracja', '/administration');
 		}
 
 		// wygenerowanie HTML'a
@@ -56,9 +56,21 @@ class View_Helper_Layout_MainPanel extends Zend_View_Helper_Abstract
 	protected function getMenu()
 	{
 		$oRequest = Zend_Controller_Front::getInstance()->getRequest();
-		$sCurrent= $oRequest->getControllerName();
+		$sMod = $oRequest->getModuleName();
+		$sCon = $oRequest->getControllerName();
 
 		$sResult = '<div class="main-nav"><ul>';
+
+		$sCurrent = '';
+
+		if(isset($this->aMenu[$sMod .'/'. $sCon]))
+		{
+			$sCurrent = $sMod .'/'. $sCon;
+		}
+		elseif(isset($this->aMenu[$sMod .'/*']))
+		{
+			$sCurrent = $sMod .'/*';
+		}
 
 		foreach($this->aMenu as $sController => $aInfo)
 		{

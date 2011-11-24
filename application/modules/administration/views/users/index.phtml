@@ -3,7 +3,7 @@
 <div class="content">
 	<header class="menu">
 		<h2>Administracja - użytkownicy</h2>
-		<a href="/administration/users-add">+nowy użytkownik</a>
+		<a href="/administration/users/add">+nowy użytkownik</a>
 		<div class="clear"></div>
 	</header>
 	<div>
@@ -20,14 +20,14 @@
 				<?php echo mb_strtolower(implode(', ', $oItem->getGlobalGroups()), 'UTF-8')?>
 			</p>
 			<p>
-				<a href="/administration/users-groups/id/<?php echo $oItem->getId() ?>">edytuj grupy</a> |
+				<a href="/administration/users/groups/id/<?php echo $oItem->getId() ?>">edytuj grupy</a> |
 		<?php if($oItem->getStatus() == User::STATUS_ACTIVE):?>
-				<a href="/administration/users-status/id/<?php echo $oItem->getId() ?>">deaktywuj</a> |
+				<a href="/administration/users/status/id/<?php echo $oItem->getId() ?>">deaktywuj</a> |
 		<?php else:?>
-				<a href="/administration/users-status/id/<?php echo $oItem->getId() ?>">aktywuj</a> |
+				<a href="/administration/users/status/id/<?php echo $oItem->getId() ?>">aktywuj</a> |
 		<?php endif;?>
-				<a href="/administration/users-edit/id/<?php echo $oItem->getId() ?>">edytuj użytkownika</a> |
-				<a href="#/administration/users-delete/id/<?php echo $oItem->getId() ?>" class="confirm" data-confirm="Czy na pewno chcesz usunąć tego użytkownika?">usuń użytkownika</a>
+				<a href="/administration/users/edit/id/<?php echo $oItem->getId() ?>">edytuj użytkownika</a> |
+				<a href="#/administration/users/delete/id/<?php echo $oItem->getId() ?>" class="confirm" data-confirm="Czy na pewno chcesz usunąć tego użytkownika?">usuń użytkownika</a>
 			</p>
 		</article>
 		<?php endforeach;?>
@@ -35,7 +35,7 @@
 		<?php echo $this->paginationControl(
 					$this->oPaginator,
 					'Sliding',
-					'app-partials/paginator.phtml',
+					'paginator.phtml',
 					array(
 						'pname'		=> 'page',
 						'pcount'	=> 6,

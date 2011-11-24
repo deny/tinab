@@ -3,7 +3,7 @@
 <div class="content">
 	<header class="menu">
 		<h2>Administracja - grupy</h2>
-		<a href="/administration/groups-add">+nowa grupa</a>
+		<a href="/administration/groups/add">+nowa grupa</a>
 		<div class="clear"></div>
 	</header>
 	<div>
@@ -21,9 +21,9 @@
 				<?php echo implode(', ', $this->privilegesDesc($oItem->getPrivileges()))?>
 			</p>
 			<p>
-				<a href="/administration/groups-users/id/<?php echo $oItem->getId() ?>">edytuj użytkowników</a> |
-				<a href="/administration/groups-edit/id/<?php echo $oItem->getId() ?>">edytuj grupę</a> |
-				<a href="#/administration/groups-delete/id/<?php echo $oItem->getId() ?>" class="confirm" data-confirm="Czy na pewno chcesz usunąć tą grupę?">usuń grupę</a>
+				<a href="/administration/groups/users/id/<?php echo $oItem->getId() ?>">edytuj użytkowników</a> |
+				<a href="/administration/groups/edit/id/<?php echo $oItem->getId() ?>">edytuj grupę</a> |
+				<a href="#/administration/groups/delete/id/<?php echo $oItem->getId() ?>" class="confirm" data-confirm="Czy na pewno chcesz usunąć tą grupę?">usuń grupę</a>
 			</p>
 		</article>
 		<?php endforeach;?>
@@ -31,7 +31,7 @@
 		<?php echo $this->paginationControl(
 					$this->oPaginator,
 					'Sliding',
-					'app-partials/paginator.phtml',
+					'paginator.phtml',
 					array(
 						'pname'		=> 'page',
 						'pcount'	=> 6,

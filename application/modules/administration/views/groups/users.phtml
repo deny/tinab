@@ -13,7 +13,7 @@
 		<form method="post" action="" autocomplete="off">
 			<?php $sField = 'users';
 			echo $this->form_Field(
-				'Grupy użytkownika',
+				'Członkowie grupy',
 				$sField,
 				$this->form_MultiChoose($sField, $this->form_Value($sField, array()), array(), $this->aUsers)
 			)?>
