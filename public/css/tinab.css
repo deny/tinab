@@ -88,7 +88,7 @@ body > header .main-panel ul li {
 	margin: 5px 5px;
 }
 body > header .main-nav {
-	background-color: #a0a0a0;
+	background-color: #afafaf;
 	float: left;
 	width: 98%;
 	padding: 0 1%;
@@ -114,19 +114,19 @@ body > header .main-nav ul li.current a {
 } 
 /* @end =page-header */
 /* @group =page-content */
-.content-wrapper .content {
+.content-wrapper > .content {
 	padding: 10px;
 	float: left;
 }
-.content-wrapper .content > header {
+.content-wrapper > .content > header {
 	background-color: #afafaf;
 	padding: 1px 10px;
-	border: 3px solid #aaaaaa;
+	border: 3px solid #afafaf;
 }
-.content-wrapper .content > div {
+.content-wrapper > .content > div {
 	background-color: #fff;
 	padding: 10px;
-	border: 3px solid #aaaaaa;
+	border: 3px solid #afafaf;
 }
 .sidebar {
 	float: right;
@@ -135,13 +135,13 @@ body > header .main-nav ul li.current a {
 .box > header {
 	background-color: #afafaf;
 	padding: 1px 10px;
-	border: 3px solid #aaaaaa;
+	border: 3px solid #afafaf;
 	font-size: 12px;
 }
 .box > .box-content {
 	background-color: #fff;
 	padding: 10px;
-	border: 3px solid #aaaaaa;
+	border: 3px solid #afafaf;
 }
 /* @end =page-content */
 /* @group =messenger */
@@ -282,3 +282,37 @@ form button[type="submit"] {
 	margin-left: 130px;
 }
 /* @end =site-admin */
+/* @group =site-profile */
+.profile .content {
+	width: 960px;
+}
+.profile .content .menu + div {
+	float: left;
+}
+.profile .content .menu {
+	border-right: 1px solid;
+	float: left;
+	margin-right: 10px;
+	min-height: 250px;
+	padding-right: 10px;
+	width: 200px;
+}
+.profile .content .menu li {
+	heigth: 35px;
+	margin-bottom: 5px;	
+}
+.profile .content .menu a {
+	background-color: #E5E5E5;
+	color: #000000;
+	display: block;
+	font-size: 12px;
+	padding: 10px 5px;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	width: 185px;
+}
+.profile .content .menu a:hover, .profile .content .menu a.current {
+	background-color: #afafaf;
+}
+/* @end =site-profile */

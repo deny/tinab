@@ -97,7 +97,7 @@ class View_Helper_Layout_MainPanel extends Zend_View_Helper_Abstract
 	{
 		return '<div class="main-panel"><ul>
 				<li>'. $this->oUser->getEmail() .'</li>
-				<li><a href="/settings">ustawienia</a></li>
+				<li><a href="/profile">profil</a></li>
 				<li><a href="/index/logout">wyloguj</a></li>
 			</ul>
 		</div>';

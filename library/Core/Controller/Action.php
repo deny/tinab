@@ -101,6 +101,8 @@ class Core_Controller_Action extends Zend_Controller_Action
 					}
 				}
 
+				$this->view->assign('oUser', $this->oUser);
+
 			}
 		}
 	}
@@ -112,7 +114,7 @@ class Core_Controller_Action extends Zend_Controller_Action
 	 * @param	array 	$aPrivileges	tablica z wymaganymi uprawnieniami
 	 * @return	Core_Controller_Action
 	 */
-	protected function setAcl($mAction, array $aPrivileges)
+	protected function setAcl($mAction, array $aPrivileges = array())
 	{
 		if(is_array($mAction)) // jeśli tablica akcji
 		{

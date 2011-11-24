@@ -35,7 +35,7 @@ class View_Helper_Form_Field extends Zend_View_Helper_Abstract
 			$sResult .= $sErrors;
 
 			// jeśli odwrotna kolejność to blok czyszczący opływanie
-			$sResult .= $bFlip ? '<div class="clear" />' : '';
+			$sResult .= $bFlip ? '<div class="clear"></div>' : '';
 
 		$sResult .= '</div>';
 

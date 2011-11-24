@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="pl">
+<head>
+	<title>Tinab</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" media="projection, screen" href="/css/tinab.css" />
+	<?php echo $this->headLink(); ?>
+
+	<script type="text/javascript" src="/js/plugins/jquery.js"></script>
+	<script type="text/javascript" src="/js/all.js"></script>
+	<?php echo $this->headScript(); ?>
+</head>
+<body>
+	<header>
+		<h1><a href="/">Tinab</a></h1>
+		<?php echo $this->layout_MainPanel()?>
+	</header>
+	<div class="page-wrapper">
+		<?php echo $this->layout_FlashMessenger(); ?>
+		<div class="<?php echo $this->layout_Class()->contentWrapper()?> profile">
+			<div class="content">
+				<header>
+					<h2>Twój profil</h2>
+				</header>
+				<div>
+					<div class="menu">
+						<?php echo $this->layout_ProfileMenu() ?>
+					</div>
+					<div>
+						<?php echo $this->layout()->content; ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</body>
+</html>

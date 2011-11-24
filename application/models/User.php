@@ -232,7 +232,7 @@ class User extends Core_DataObject
 	{
 		$this->sSalt = UserFactory::generateSalt();
 		$this->sPasswd = UserFactory::hashPassword($sPasswd, $this->sSalt);
-		$this->setDataValue('passwd', $this->$sPasswd);
+		$this->setDataValue('passwd', $this->sPasswd);
 		$this->setDataValue('salt', $this->sSalt);
 	}
 
