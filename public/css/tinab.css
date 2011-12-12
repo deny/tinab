@@ -232,6 +232,15 @@ form .formMultiChoose .multiButtons {
 form .formMultiChoose .multiButtons button {
 	margin-top: 10px;
 }
+form button[type="submit"] {
+	margin-left: 130px;
+}
+form.standard label {
+	width: 180px;
+}
+form.standard button, form.standard .error-inline {
+	margin-left: 180px;
+}
 /* @end =form */
 /* @group =site-login */
 .login .content {
@@ -278,9 +287,6 @@ form .formMultiChoose .multiButtons button {
 .admin form .error-inline {
 	margin-left: 130px;
 }
-form button[type="submit"] {
-	margin-left: 130px;
-}
 /* @end =site-admin */
 /* @group =site-profile */
 .profile .content {
@@ -314,5 +320,11 @@ form button[type="submit"] {
 }
 .profile .content .menu a:hover, .profile .content .menu a.current {
 	background-color: #afafaf;
+}
+.profile dl dd {
+	font-weight: bold;
+}
+.profile dl dt {
+	margin-bottom: 10px;
 }
 /* @end =site-profile */

@@ -1,0 +1,25 @@
+<form class="standard" method="post" autocomplete="off" action="">
+
+	<?php $sField = 'email';
+	echo $this->form_Field(
+		'adres e-mail',
+		$sField,
+		$this->formText($sField, $this->form_Value($sField))
+	)?>
+
+	<?php $sField = 'name';
+	echo $this->form_Field(
+		'imię',
+		$sField,
+		$this->formText($sField, $this->form_Value($sField))
+	)?>
+
+	<?php $sField = 'surname';
+	echo $this->form_Field(
+		'nazwisko',
+		$sField,
+		$this->formText($sField, $this->form_Value($sField))
+	)?>
+
+	<button type="submit">Zapisz zmiany</button>
+</form>

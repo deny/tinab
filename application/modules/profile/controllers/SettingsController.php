@@ -13,7 +13,7 @@ class Profile_SettingsController extends Core_Controller_Action
 	{
 		// wymagane uprawnienia
 		$this->setAcl(array(
-			'password'
+			'password', 'info'
 		));
 
 		parent::init();
@@ -44,7 +44,70 @@ class Profile_SettingsController extends Core_Controller_Action
 		}
 	}
 
+	/**
+	 * Dane osobowe
+	 */
+	public function infoAction()
+	{
+		if($this->_request->isPost())
+		{
+			$oFilter = $this->getUserFilter();
+
+			if($oFilter->isValid())
+			{
+				$aValues = $oFilter->getEscaped();
+
+				$this->oUser->setEmail($aValues['email']);
+				$this->oUser->setName($aValues['name']);
+				$this->oUser->setSurname($aValues['surname']);
+				$this->oUser->save();
+
+				$this->addMessage('Zapisano zmiany', self::MSG_OK);
+				$this->_redirect('/profile/settings/info');
+				exit();
+			}
+
+			$this->showFormMessages($oFilter);
+		}
+		else
+		{
+			$this->view->assign('aValues', array(
+				'email' 	=> $this->oUser->getEmail(),
+				'nick'		=> $this->oUser->getNick(),
+				'name'		=> $this->oUser->getName(),
+				'surname'	=> $this->oUser->getSurname()
+			));
+		}
+	}
+
 // FILTRY
+
+	/**
+	 * Zwraca filtr do walidacji danych usera
+	 *
+	 * @return	Core_Filter_Input
+	 */
+	protected function getUserFilter()
+	{
+		$aValues = $this->_request->getPost();
+
+		$aValidators = array(
+			'email' => array(
+				new Core_Validate_EmailAddress(),
+				new Core_Validate_EmailUnique($this->oUser),
+			),
+			'name' => array(
+				new Core_Validate_StringLength(array('min' =>1, 'max' => 20)),
+			),
+			'surname' => array(
+				new Core_Validate_StringLength(array('min' =>1, 'max' => 30)),
+			)
+
+		);
+
+		// filtr
+		return new Core_Filter_Input(null, $aValidators, $aValues);
+	}
 
 	/**
 	 * Zwraca filtr do walidacji zmienianego hasła
