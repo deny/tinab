@@ -12,6 +12,7 @@ class View_Helper_Layout_MainPanel extends Zend_View_Helper_Abstract
 	 */
 	protected $aMenu = array(
 		'default/summary' 	=> array('Podsumowanie', '/summary'),
+		'project/*'			=> array('Projekty', '/project'),
 		'#1' 				=> array('Zadania', '#'),
 		'#2' 				=> array('Wiadomości', '#')
 	);
