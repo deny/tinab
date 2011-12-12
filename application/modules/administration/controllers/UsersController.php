@@ -171,14 +171,14 @@ class Administration_UsersController extends Core_Controller_Action
 			// wyjmujemy tylko poprawne ID
 			$aNewIds = array_intersect($aNewIds, array_keys($aGroups));
 
-			$oUser->resetGlobalGroups($aNewIds);
+			$oUser->resetGroups($aNewIds);
 			$this->_redirect('/administration/users');
 			exit();
 		}
 		else // jeśli brak posta to przekazujemy do formularza dane usera
 		{
 			$aIds = array();
-			foreach($oUser->getGlobalGroups() as $oGroup)
+			foreach($oUser->getGroups() as $oGroup)
 			{
 				$aIds[] = $oGroup->getId();
 			}

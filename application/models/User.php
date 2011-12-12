@@ -67,6 +67,13 @@ class User extends Core_DataObject
 	protected $aGlobalGroups = null;
 
 	/**
+	 * Tablica na obiekty grup projektowych
+	 *
+	 * @var	array
+	 */
+	protected $aProjectGroups = array();
+
+	/**
 	 * Konstruktor
 	 *
 	 * @param	int		$iId		id usera
@@ -175,14 +182,26 @@ class User extends Core_DataObject
 	 *
 	 * @return	array
 	 */
-	public function getGlobalGroups()
+	public function getGroups(Project $oProject = null)
 	{
-		if($this->aGlobalGroups === null)
+		if(isset($oProject)) // jeśli podano projekt
 		{
-			$this->aGlobalGroups = GroupFactory::getNew()->getForUser($this);
+			if(!isset($this->aProjectGroups[$oProject->getId()]))
+			{
+				$this->aProjectGroups[$oProject->getId()] = GroupFactory::getNew()->getForUser($this, $oProject->getId());
+			}
+			$aTmp = &$this->aProjectGroups[$oProject->getId()];
+		}
+		else // grupy globalne
+		{
+			if($this->aGlobalGroups === null)
+			{
+				$this->aGlobalGroups = GroupFactory::getNew()->getForUser($this);
+			}
+			$aTmp = &$this->aGlobalGroups;
 		}
 
-		return $this->aGlobalGroups;
+		return $aTmp;
 	}
 
 	/**
@@ -261,13 +280,16 @@ class User extends Core_DataObject
 	}
 
 	/**
-	 * Ustawia ponownie globalne grupy usera
+	 * Ustawia ponownie grupy usera
 	 *
-	 * @param	array	$aGroups	tablica z numerami ID grup
+	 * @param	array		$aGroups	tablica z numerami ID grup
+	 * @param	Procject	$oProject	obiekt projektu
 	 * @return	void
 	 */
-	public function resetGlobalGroups(array $aGroups)
+	public function resetGroups(array $aGroups, Project $oProject = null)
 	{
+		$sProject = isset($oProject) ? ' = '. $oProject->getId() : ' IS NULL';
+
 		// wykonanie transakcji uaktualniającej globalne grupy usera
 		try
 		{
@@ -277,9 +299,10 @@ class User extends Core_DataObject
 			$this->oDb->query(
 				'DELETE user_groups '.
 				'FROM user_groups JOIN groups ON groups.group_id = user_groups.group_id '.
-				'WHERE user_groups.user_id = '. $this->iId .' AND groups.project_id IS NULL'
+				'WHERE user_groups.user_id = '. $this->iId .' AND groups.project_id' . $sProject
 			);
 
+			// dodanie usera do grup - jeśli trzeba
 			if(!empty($aGroups))
 			{
 				// przygotowanie zapytania z insertem
@@ -294,7 +317,16 @@ class User extends Core_DataObject
 			}
 
 			$this->oDb->commit();
-			$this->aGlobalGroups = null;
+
+			// wyczyszczenie zmiennych
+			if(isset($oProject) && isset($this->aProjectGroups[$oProject->getId()]))
+			{
+				unset($this->aProjectGroups[$oProject->getId()]);
+			}
+			else
+			{
+				$this->aGlobalGroups = null;
+			}
 		}
 		catch(Exception $oExc)
 		{
@@ -302,6 +334,5 @@ class User extends Core_DataObject
 			throw $oExc;
 		}
 	}
-
 }
 

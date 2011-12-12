@@ -19,14 +19,16 @@ class GroupFactory extends Core_DataObject_Factory
 	 * @param	string	$sName			nazwa grupy
 	 * @param	int		$iProjectId		id projektu
 	 * @param	string	$sDesc			opis
+	 * @param	bool	$bMain			czy jest to grupa główna projektu
 	 * @return	Group
 	 */
-	public function create($sName, $sDesc, $iProjectId = null)
+	public function create($sName, $sDesc, $iProjectId = null, $bMain = false)
 	{
 		$aData = array(
 			'name' 			=> $sName,
 			'project_id' 	=> $iProjectId,
-			'desc'			=> $sDesc
+			'desc'			=> $sDesc,
+			'is_main'		=> $bMain
 		);
 
 		$this->oDb->insert($this->getTableName(), $aData);
@@ -204,6 +206,7 @@ class GroupFactory extends Core_DataObject_Factory
 			$aRow['name'],
 			$aRow['desc'],
 			$aRow['project_id'],
+			$aRow['is_main'],
 			$aPreload
 		);
 	}

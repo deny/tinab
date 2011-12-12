@@ -16,7 +16,7 @@ class View_Helper_Layout_ProfileMenu extends Zend_View_Helper_Abstract
 		'index/index'		=> array('Informacje', '/profile'),
 		'settings/info'		=> array('Dane osobowe', '/profile/settings/info'),
 		'settings/password'	=> array('Hasło', '/profile/settings/password'),
-		'settings/notices'	=> array('Powiadomienia', '/profile/settings/notices'),
+		'#'	=> array('Powiadomienia', '/profile/settings/notices'),
 	);
 
 	/**

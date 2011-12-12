@@ -34,6 +34,13 @@ class Group extends Core_DataObject
 	protected $iProjectId;
 
 	/**
+	 * Czy grupa główna projektu
+	 *
+	 * @var	bool
+	 */
+	protected $bMain;
+
+	/**
 	 * Tablica z uprawnieniami grupy
 	 *
 	 * @var	array
@@ -61,10 +68,11 @@ class Group extends Core_DataObject
 	 * @param	string	$sName			nazwa grupy
 	 * @param	string	$sDesc			opis grupy
 	 * @param	int		$iProjectId		id projektu
+	 * @param	bool	$bMain			czy grupa główna projektu
 	 * @param	array	$aPreload		tablica z preloadem
 	 * @return	Group
 	 */
-	public function __construct($iId, $sName, $sDesc, $iProjectId = null, $aPreload = array())
+	public function __construct($iId, $sName, $sDesc, $iProjectId = null, $bMain = false, $aPreload = array())
 	{
 		parent::__construct('groups', array('group_id' => $iId));
 
@@ -72,6 +80,7 @@ class Group extends Core_DataObject
 		$this->sName = $sName;
 		$this->sDesc = $sDesc;
 		$this->iProjectId = $iProjectId;
+		$this->bMain = $bMain;
 
 		if(isset($aPreload['privileges']))
 		{
@@ -174,6 +183,16 @@ class Group extends Core_DataObject
 		}
 
 		return $this->aUsers;
+	}
+
+	/**
+	 * Czy jest to grupa główna
+	 *
+	 * @return	bool
+	 */
+	public function isMain()
+	{
+		return $this->bMain;
 	}
 
 // settery

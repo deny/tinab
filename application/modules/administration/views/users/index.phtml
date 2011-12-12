@@ -17,7 +17,7 @@
 				<?php echo $this->userStatus($oItem)?>
 				<br />
 				<strong>grupy:</strong>
-				<?php echo mb_strtolower(implode(', ', $oItem->getGlobalGroups()), 'UTF-8')?>
+				<?php echo mb_strtolower(implode(', ', $oItem->getGroups()), 'UTF-8')?>
 			</p>
 			<p>
 				<a href="/administration/users/groups/id/<?php echo $oItem->getId() ?>">edytuj grupy</a> |

@@ -6,11 +6,14 @@
 abstract class Privileges
 {
 	// uprawnienia globalne
-	const ADMIN 		= 'adm';
-	const PROJ_CRATE 	= 'proj_crate';
+	const ADMIN 		= 'adm';					// administracja
+	const PROJ_CRATE 	= 'proj_crate';				// tworzenie projektów
 
 	// uprawnienia projektowe
-	const PROJ_ADM 		= 'proj_adm';
+	const PROJ_ADM 			= 'proj_adm';			// administracja projektem
+	const PROJ_TASKLIST 	= 'proj_tasklist';		// tworzenie/edycja/usuwanie list zadań
+	const PROJ_TASK 		= 'proj_task';			// tworzenie/edycja/usuwanie zadań
+	const PROJ_TASK_ALOC 	= 'proj_task_aloc';		// przydzielanie zadań
 
 	/**
 	 * Opisy globalnych uprawnień
@@ -28,7 +31,10 @@ abstract class Privileges
 	 * @var	array
 	 */
 	protected static $aProjectDesc = array(
-		self::PROJ_ADM 		=> 'administracja projektem'
+		self::PROJ_ADM 			=> 'administracja projektem',
+		self::PROJ_TASKLIST		=> 'tworzenie/edycja/usuwanie list zadań',
+		self::PROJ_TASK			=> 'tworzenie/edycja/usuwanie zadań',
+		self::PROJ_TASK_ALOC	=> 'przydzielanie zadań'
 	);
 
 	/**
