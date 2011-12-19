@@ -27,7 +27,7 @@ class Project extends Core_DataObject
 	protected $iAuthorId;
 
 	/**
-	 * Czas utworzenia 
+	 * Czas utworzenia
 	 *
 	 * @var int
 	 */
@@ -35,11 +35,11 @@ class Project extends Core_DataObject
 
 	/**
 	 * Konstruktor
-	 * 
-	 * @param	int		$iId			id projektu	
+	 *
+	 * @param	int		$iId			id projektu
 	 * @param	string	$sName			nazwa projektu
 	 * @param	int		$iAuthorId		autor projektu
-	 * @param	int		$iCreationTime	czas utworzenia	
+	 * @param	int		$iCreationTime	czas utworzenia
 	 * @return	Project
 	 */
 	public function __construct($iId, $sName, $iAuthorId, $iCreationTime)
@@ -99,7 +99,7 @@ class Project extends Core_DataObject
 	/**
 	 * Ustawia nazwę
 	 *
-	 * @param	string	$sName	nowa nazwa	
+	 * @param	string	$sName	nowa nazwa
 	 * @return	void
 	 */
 	public function setName($sName)

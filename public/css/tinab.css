@@ -328,3 +328,39 @@ form.standard button, form.standard .error-inline {
 	margin-bottom: 10px;
 }
 /* @end =site-profile */
+/* @group =site-col2r */
+.col2r .content {
+	width: 700px;
+}
+.col2r .content > header.menu h2 {
+	float: left;
+}
+.col2r .content > header.menu a {
+	float: right;
+	text-decoration: none;
+}
+.col2r .sidebar {
+	width: 240px;
+}
+.col2r .box-content.box-r ul li {
+	font-size: 12px;
+}
+.col2r article {
+	margin-bottom: 20px;
+}
+.col2r article p {
+	font-size: 12px;
+	padding-left: 10px;
+}
+.col2r article ul li {
+	display: inline;
+	font-size: 12px;
+	padding-left: 10px;
+}
+.col2r form label {
+	width: 130px;
+}
+.col2r form .error-inline {
+	margin-left: 130px;
+}
+/* @end =site-col2r */

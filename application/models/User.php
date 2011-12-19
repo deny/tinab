@@ -74,6 +74,13 @@ class User extends Core_DataObject
 	protected $aProjectGroups = array();
 
 	/**
+	 * Tablica na załadowane uprawnienia
+	 *
+	 * @var	array
+	 */
+	protected $aPivileges = array();
+
+	/**
 	 * Konstruktor
 	 *
 	 * @param	int		$iId		id usera
@@ -174,7 +181,26 @@ class User extends Core_DataObject
 	 */
 	public function getPrivileges($iProjectId = null)
 	{
-		return Privileges::getUserPrivileges($this, $iProjectId);
+		$sKey = $iProjectId === null ? 'global' : $iProjectId;
+
+		if(!isset($this->aPivileges[$sKey]))
+		{
+			$this->aPivileges[$sKey] = Privileges::getUserPrivileges($this, $iProjectId);
+		}
+
+		return $this->aPivileges[$sKey];
+	}
+
+	/**
+	 * Sprawdza czy user posiada podane prawnienie
+	 *
+	 * @param	string	$sPriv			uprawnienie
+	 * @param	int		$iProjectId		id projektu
+	 * @return	bool
+	 */
+	public function hasPrivilege($sPriv, $iProjectId = null)
+	{
+		return in_array($sPriv, $this->getPrivileges($iProjectId));
 	}
 
 	/**

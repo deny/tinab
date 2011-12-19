@@ -6,6 +6,13 @@
 class Project_IndexController extends Core_Controller_Action
 {
 	/**
+	 * Fabryka projektów
+	 *
+	 * @var	ProjectFactory
+	 */
+	protected $oFactory;
+
+	/**
 	 * (non-PHPdoc)
 	 * @see Core_Controller_Action::init()
 	 */
@@ -17,6 +24,8 @@ class Project_IndexController extends Core_Controller_Action
 		));
 
 		parent::init();
+
+		$this->oFactory = new ProjectFactory();
 	}
 
 	/**
@@ -24,6 +33,20 @@ class Project_IndexController extends Core_Controller_Action
 	 */
 	public function indexAction()
 	{
+		$iPage = $this->_request->getParam('page', 1);
 
+		if($iPage < 1)
+		{
+			$this->moveTo404();
+		}
+
+		$oPaginator = $this->oFactory->getUserPaginator($this->oUser, $iPage, 20);
+
+		if($oPaginator->count() > 0 && $iPage > $oPaginator->count())
+		{
+			$this->moveTo404();
+		}
+
+		$this->view->assign('oPaginator', $oPaginator);
 	}
 }

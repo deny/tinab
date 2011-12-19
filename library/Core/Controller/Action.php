@@ -86,7 +86,7 @@ class Core_Controller_Action extends Zend_Controller_Action
 					);
 				}
 
-				// pobranie uprawnień usera
+				// pobranie uprawień usera
 				$aPriv = $this->oUser->getPrivileges($this->iProjectId);
 
 				// sprawdzenie czy user ma wszystkie wymagane uprawnienia

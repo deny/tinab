@@ -63,6 +63,38 @@ class ProjectFactory extends Core_DataObject_Factory
 	}
 
 	/**
+	 * Zwraca paginator z projektami usera
+	 *
+	 * @param	User	$oUser	obiekt usera
+	 * @param	int		$iPage	numer strony
+	 * @param	int		$iCount	ilość elementów na stronę
+	 * @return	Zend_Paginator
+	 */
+	public function getUserPaginator(User $oUser, $iPage, $iCount)
+	{
+		$oWhere = new Core_DataObject_Where('ug.user_id = ?', $oUser->getId());
+
+		return $this->getPaginator($iPage, $iCount, array('name'), $oWhere, array('users' => true));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see Core_DataObject_Factory::getSelect()
+	 */
+	protected function getSelect($mFields = '*', $mOption = null)
+	{
+		$oSelect = parent::getSelect($mFields, $mOption);
+
+		if(isset($mOption) && isset($mOption['users']))
+		{
+			$oSelect->join('groups AS g', 'g.project_id = projects.project_id', '')
+					->join('user_groups AS ug', 'ug.group_id = g.group_id');
+		}
+
+		return $oSelect;
+	}
+
+	/**
 	 * (non-PHPdoc)
 	 * @see Core_DataObject_Factory::createObject()
 	 */

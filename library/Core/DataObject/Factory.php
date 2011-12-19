@@ -292,7 +292,7 @@ abstract class Core_DataObject_Factory
 	 */
 	protected function getCountSelect($mOption = null)
 	{
-		return $this->getSelect()
+		return $this->getSelect('*', $mOption)
 						->reset(Zend_Db_Select::COLUMNS)
 						->columns(new Zend_Db_Expr('COUNT(*)'));
 	}

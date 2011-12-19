@@ -48,7 +48,7 @@ abstract class Privileges
 	}
 
 	/**
-	 * Zwraca opisy uprawnień
+	 * Zwraca opisy wszystkich uprawnień
 	 *
 	 * @return	array
 	 */
@@ -92,9 +92,9 @@ abstract class Privileges
 							->join('user_groups AS ug', 'ug.group_id = g.group_id', '')
 							->where('ug.user_id = ?', $oUser->getId());
 
-		if(isset($iProjectId))
+		if(isset($iProjectId)) // jeśli podano projekt to wyjmujemy globalne + projektowe
 		{
-			$oSelect->where('g.project_id = ?', $iProjectId);
+			$oSelect->where('g.project_id IS NULL OR g.project_id = ?', $iProjectId);
 		}
 		else
 		{

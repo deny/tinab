@@ -33,10 +33,7 @@ class View_Helper_Layout_MainPanel extends Zend_View_Helper_Abstract
 	{
 		$this->oUser = Core_Auth::getInstance()->getUser();
 
-		// pobranie globalnych uprawnień
-		$aPriv = $this->oUser->getPrivileges();
-
-		if(in_array(Privileges::ADMIN, $aPriv))
+		if($this->oUser->hasPrivilege(Privileges::ADMIN))
 		{
 			$this->aMenu['administration/*'] = array('Administracja', '/administration');
 		}
