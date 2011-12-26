@@ -1,0 +1,28 @@
+<?php $this->layout_Class()->contentWrapper('col2r')?>
+
+<div class="content">
+	<header>
+		<h2>Projekty- <?php echo $this->bEdit ? 'edycja projektu' : 'nowy projekt'?></h2>
+	</header>
+	<div>
+		<form method="post" action="" autocomplete="off">
+
+			<?php $sField = 'name';
+			echo $this->form_Field(
+				'Nazwa projektu',
+				$sField,
+				$this->formText($sField, $this->form_Value($sField))
+			)?>
+
+			<?php $sField = 'desc';
+			echo $this->form_Field(
+				'Krótki opis projektu',
+				$sField,
+				$this->formTextarea($sField, $this->form_Value($sField))
+			)?>
+
+			<button type="submit"><?php echo $this->bEdit ? 'zapisz' : 'dodaj'?></button>
+		</form>
+	</div>
+</div>
+<?php echo $this->sidebar_Project()?>

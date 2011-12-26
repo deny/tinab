@@ -1,0 +1,36 @@
+<?php $this->layout_Class()->contentWrapper('col2r')?>
+
+<div class="content">
+	<header>
+		<h2>Projekty - <?php echo $this->bEdit ? 'edycja grupy' : 'nowa grupa'?></h2>
+	</header>
+	<div>
+		<h3><?php echo $this->oProject->getName() ?></h3>
+		<form method="post" action="">
+			<?php $sField = 'name';
+			echo $this->form_Field(
+				'nazwa grupy',
+				$sField,
+				$this->formText($sField, $this->form_Value($sField))
+			)?>
+
+			<?php $sField = 'desc';
+			echo $this->form_Field(
+				'opis',
+				$sField,
+				$this->formTextarea($sField, $this->form_Value($sField), array('cols' => 70, 'rows' => 5))
+			)?>
+
+			<?php $sField = 'priv';
+			echo $this->form_Field(
+				'uprawnienia',
+				$sField,
+				$this->form_MultiChoose($sField, $this->form_Value($sField, array()), array(), Privileges::getProject()),
+				array('class' => 'multi')
+			)?>
+
+			<button type="submit"><?php echo $this->bEdit ? 'zapisz' : 'dodaj'?></button>
+		</form>
+	</div>
+</div>
+<?php echo $this->sidebar_Admin()?>

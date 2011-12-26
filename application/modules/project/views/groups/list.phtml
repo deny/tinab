@@ -1,0 +1,44 @@
+<?php $this->layout_Class()->contentWrapper('col2r')?>
+
+<div class="content">
+	<header class="menu">
+		<h2>Projekty - grupy</h2>
+		<a href="/project/groups/id/<?php echo $this->iProjectId ?>/add">+nowa grupa</a>
+		<div class="clear"></div>
+	</header>
+	<div>
+		<h3><?php echo $this->oProject->getName() ?></h3>
+		<?php foreach($this->oPaginator as $oItem):?>
+		<article>
+			<h4><?php echo $oItem->getName()?></h4>
+
+			<p>
+				<?php echo $oItem->getDescription()?>
+			</p>
+			<p>
+				<strong>liczba użytkowników:</strong>
+				<?php echo $oItem->getUsersCount()?>
+				<strong>uprawnienia:</strong>
+				<?php echo implode(', ', $this->privilegesDesc($oItem->getPrivileges()))?>
+			</p>
+			<p>
+				<a href="/project/groups/users/id/<?php echo $this->iProjectId ?>/group/<?php echo $oItem->getId() ?>">edytuj użytkowników</a> |
+				<a href="/project/groups/edit/id/<?php echo $this->iProjectId ?>/group/<?php echo $oItem->getId() ?>">edytuj grupę</a> |
+				<a href="#/project/groups/delete/id/<?php echo $this->iProjectId ?>/group/<?php echo $oItem->getId() ?>" class="confirm" data-confirm="Czy na pewno chcesz usunąć tą grupę?">usuń grupę</a>
+			</p>
+		</article>
+		<?php endforeach;?>
+
+		<?php echo $this->paginationControl(
+					$this->oPaginator,
+					'Sliding',
+					'paginator.phtml',
+					array(
+						'pname'		=> 'page',
+						'pcount'	=> 6,
+						'actionUrl'	=> '/project/groups/id/'. $this->iProjectId
+					)
+		);?>
+	</div>
+</div>
+<?php echo $this->sidebar_Project()?>

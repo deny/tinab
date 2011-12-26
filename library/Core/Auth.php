@@ -18,7 +18,7 @@ class Core_Auth extends Zend_Auth
 	 * @var	User
 	 */
 	protected $oUser = null;
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Zend_Auth::hasIdentity()
@@ -29,16 +29,13 @@ class Core_Auth extends Zend_Auth
 		{
 			try
 			{
-				$iId = (int) $this->getIdentity();
-				$oUser = UserFactory::getNew()->getOne($iId);
-				
-				if($oUser->getStatus() != User::STATUS_ACTIVE)
+				if(!isset($this->oUser))
 				{
-					return false;
+					$iId = (int) $this->getIdentity();
+					$this->oUser = UserFactory::getNew()->getOne($iId);
 				}
-				
-				$this->oUser = $oUser;
-				return true;
+
+				return $this->oUser->getStatus() == User::STATUS_ACTIVE;
 			}
 			catch(Core_DataObject_Exception $oExc) // brak usera - wylogowanie
 			{
@@ -46,7 +43,7 @@ class Core_Auth extends Zend_Auth
 				return false;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -72,7 +69,7 @@ class Core_Auth extends Zend_Auth
      */
 	public static function getInstance()
 	{
-		if(self::$_instance === null) 
+		if(self::$_instance === null)
 		{
 			self::$_instance = new self();
 		}

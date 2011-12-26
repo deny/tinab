@@ -48,6 +48,16 @@ abstract class Privileges
 	}
 
 	/**
+	 * Zwraca listę projektowych uprawnień wraz z ich opisami
+	 *
+	 * @return	array
+	 */
+	static public function getProject()
+	{
+		return self::$aProjectDesc;
+	}
+
+	/**
 	 * Zwraca opisy wszystkich uprawnień
 	 *
 	 * @return	array
@@ -78,11 +88,11 @@ abstract class Privileges
 	/**
 	 * Zwraca tablicę z uprawnieniami usera dla poszczególnego projektu
 	 *
-	 * @param 	User 		$oUser			obiekt usera
-	 * @param	int|null	$iProjectId		id projektu
+	 * @param 	User 			$oUser			obiekt usera
+	 * @param	int|null|array	$mProjectId		id projektu/tablica id projektów
 	 * @return	array
 	 */
-	static public function getUserPrivileges(User $oUser, $iProjectId = null)
+	static public function getUserPrivileges(User $oUser, $mProjectId = null)
 	{
 		$oDb = Zend_Registry::get('db');
 
@@ -92,9 +102,31 @@ abstract class Privileges
 							->join('user_groups AS ug', 'ug.group_id = g.group_id', '')
 							->where('ug.user_id = ?', $oUser->getId());
 
-		if(isset($iProjectId)) // jeśli podano projekt to wyjmujemy globalne + projektowe
+		if(is_array($mProjectId)) // jeśli podano tablicę z numerami ID
 		{
-			$oSelect->where('g.project_id IS NULL OR g.project_id = ?', $iProjectId);
+			if(empty($mProjectId))
+			{
+				return array();
+			}
+
+			$oSelect->reset(Zend_Db_Select::COLUMNS)
+						->columns(array('g.project_id', 'gp.privilege'))
+						->where('g.project_id IS NULL OR g.project_id IN (?)', $mProjectId);
+			$aDbRes = $oSelect->distinct()->query()->fetchAll();
+
+			$aResult = array_fill_keys($mProjectId, array());
+			$aResult['global'] = array();
+			foreach($aDbRes as $aRow)
+			{
+				$sKey = $aRow['project_id'] === null ? 'global' : $aRow['project_id'];
+				$aResult[$sKey][] = $aRow['privilege'];
+			}
+
+			return $aResult;
+		}
+		elseif(isset($mProjectId)) // jeśli podano projekt to wyjmujemy globalne + projektowe
+		{
+			$oSelect->where('g.project_id IS NULL OR g.project_id = ?', $mProjectId);
 		}
 		else
 		{

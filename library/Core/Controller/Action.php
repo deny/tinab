@@ -49,7 +49,7 @@ class Core_Controller_Action extends Zend_Controller_Action
 	{
 		parent::init();
 
-		// porbanie zalogowanego usera
+		// pobranie zalogowanego usera
 		if(Core_Auth::getInstance()->hasIdentity())
 		{
 			$this->oUser = Core_Auth::getInstance()->getUser();

@@ -47,6 +47,14 @@ class Project_IndexController extends Core_Controller_Action
 			$this->moveTo404();
 		}
 
+		// wyciągnięcie uprawnień dla wyświetlanych projektów
+		$aIds = array();
+		foreach($oPaginator as $oProject)
+		{
+			$aIds[] = $oProject->getId();
+		}
+		$this->oUser->loadPrivileges($aIds);
+
 		$this->view->assign('oPaginator', $oPaginator);
 	}
 }

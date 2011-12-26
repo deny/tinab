@@ -78,7 +78,7 @@ class User extends Core_DataObject
 	 *
 	 * @var	array
 	 */
-	protected $aPivileges = array();
+	protected $aPrivileges = array();
 
 	/**
 	 * Konstruktor
@@ -183,12 +183,12 @@ class User extends Core_DataObject
 	{
 		$sKey = $iProjectId === null ? 'global' : $iProjectId;
 
-		if(!isset($this->aPivileges[$sKey]))
+		if(!isset($this->aPrivileges[$sKey]))
 		{
-			$this->aPivileges[$sKey] = Privileges::getUserPrivileges($this, $iProjectId);
+			$this->aPrivileges[$sKey] = Privileges::getUserPrivileges($this, $iProjectId);
 		}
 
-		return $this->aPivileges[$sKey];
+		return $this->aPrivileges[$sKey];
 	}
 
 	/**
@@ -359,6 +359,19 @@ class User extends Core_DataObject
 			$this->oDb->rollBack();
 			throw $oExc;
 		}
+	}
+
+// pozostałe
+
+	/**
+	 * Ładuje uprawnienia dla wybranych projektów
+	 *
+	 * @param	array	$iProjectIds	tablica z numerami Id projektów
+	 * @return	void
+	 */
+	public function loadPrivileges(array $aProjectIds)
+	{
+		$this->aPrivileges += Privileges::getUserPrivileges($this, $aProjectIds);
 	}
 }
 

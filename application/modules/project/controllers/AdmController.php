@@ -53,6 +53,7 @@ class Project_AdmController extends Core_Controller_Action
 
 				$oProject = $this->oFactory->create(
 					$aValues['name'],
+					$aValues['desc'],
 					$this->oUser
 				);
 
@@ -63,6 +64,9 @@ class Project_AdmController extends Core_Controller_Action
 
 			$this->showFormMessages($oFilter);
 		}
+
+		$this->_helper->viewRenderer('form-project');
+		$this->view->assign('bEdit', false);
 	}
 
 	/**
@@ -81,6 +85,7 @@ class Project_AdmController extends Core_Controller_Action
 				$aValues = $oFilter->getEscaped();
 
 				$oProject->setName($aValues['name']);
+				$oProject->setDesc($aValues['desc']);
 				$oProject->save();
 
 				$this->addMessage('Projekt został zmieniony', self::MSG_OK);
@@ -90,6 +95,16 @@ class Project_AdmController extends Core_Controller_Action
 
 			$this->showFormMessages($oFilter);
 		}
+		else
+		{
+			$this->view->assign('aValues', array(
+				'name'	=> $oProject->getName(),
+				'desc'	=> $oProject->getDesc()
+			));
+		}
+
+		$this->_helper->viewRenderer('form-project');
+		$this->view->assign('bEdit', true);
 	}
 
 	/**
@@ -138,6 +153,28 @@ class Project_AdmController extends Core_Controller_Action
     	// walidatory
 		$aValidators = array(
 			'name' => array(
+				new Core_Validate_StringLength(array('min' => 1, 'max' => 255)),
+				new Core_Validate_Callback(array(
+					'message' => 'Projekt o takiej nazwie już istnieje',
+					'options' => array($oProject),
+					'callback' => function($sValue, $oProject) {
+
+						if(isset($oProject) && $oProject->getName() == $sValue)
+						{
+							return true;
+						}
+
+						$aDbRes = Zend_Registry::get('db')->select()
+										->from('projects', 'project_id')
+										->where('name = ?', $sValue)
+										->limit(1)->query()->fetchAll(Zend_Db::FETCH_COLUMN);
+
+						return empty($aDbRes);
+					}
+				))
+			),
+			'desc' => array(
+				new Core_Validate_StringLength(array('min' => 1, 'max' => 255))
 			)
 		);
 

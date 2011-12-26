@@ -17,14 +17,16 @@ class ProjectFactory extends Core_DataObject_Factory
 	 * Tworzy nowy projekt
 	 *
 	 * @param	string	$sName		nazwa projektu
+	 * @param	strign	$sDesc		opis projektu
 	 * @param	User	$oUser		obiekt usera
 	 * @return	Project
 	 */
-	public function create($sName, User $oUser)
+	public function create($sName, $sDesc, User $oUser)
 	{
 	// utworzenie nowego projektu
 		$aData = array(
 			'name' 			=> $sName,
+			'desc'			=> $sDesc,
 			'author_id' 	=> $oUser->getId(),
 			'creation_time' => $_SERVER['REQUEST_TIME']
 		);
@@ -39,7 +41,8 @@ class ProjectFactory extends Core_DataObject_Factory
 		$oAdmGroup = $oGroupF->create(
 			'Administratorzy',
 			'grupa administratorów projektu',
-			$oProject->getId()
+			$oProject->getId(),
+			true
 		);
 		$oAdmGroup->setPrivileges(array(Privileges::PROJ_ADM));
 
@@ -88,7 +91,8 @@ class ProjectFactory extends Core_DataObject_Factory
 		if(isset($mOption) && isset($mOption['users']))
 		{
 			$oSelect->join('groups AS g', 'g.project_id = projects.project_id', '')
-					->join('user_groups AS ug', 'ug.group_id = g.group_id');
+					->join('user_groups AS ug', 'ug.group_id = g.group_id', '')
+					->distinct();
 		}
 
 		return $oSelect;
@@ -103,6 +107,7 @@ class ProjectFactory extends Core_DataObject_Factory
 		return new Project(
 			$aRow['project_id'],
 			$aRow['name'],
+			$aRow['desc'],
 			$aRow['author_id'],
 			$aRow['creation_time']
 		);

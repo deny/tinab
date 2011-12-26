@@ -48,7 +48,7 @@ class UserFactory extends Core_DataObject_Factory
 	 */
 	public function getList()
 	{
-		$oSelect = $this->getSelect(array('user_id', 'CONCAT(surname, name) AS nick'))
+		$oSelect = $this->getSelect(array('user_id', 'CONCAT(surname, " " , name) AS nick'))
 						->order('nick');
 
 		return $this->oDb->fetchPairs($oSelect);

@@ -20,6 +20,13 @@ class Project extends Core_DataObject
 	protected $sName;
 
 	/**
+	 * Opius projektu
+	 *
+	 * @var	string
+	 */
+	protected $sDesc;
+
+	/**
 	 * Autor projektu
 	 *
 	 * @var int
@@ -38,16 +45,18 @@ class Project extends Core_DataObject
 	 *
 	 * @param	int		$iId			id projektu
 	 * @param	string	$sName			nazwa projektu
+	 * @param	strign	$sDesc			opis projektu
 	 * @param	int		$iAuthorId		autor projektu
 	 * @param	int		$iCreationTime	czas utworzenia
 	 * @return	Project
 	 */
-	public function __construct($iId, $sName, $iAuthorId, $iCreationTime)
+	public function __construct($iId, $sName, $sDesc, $iAuthorId, $iCreationTime)
 	{
 		parent::__construct('projects', array('project_id' => $iId));
 
 		$this->iId = $iId;
 		$this->sName = $sName;
+		$this->sDesc = $sDesc;
 		$this->iAuthorId = $iAuthorId;
 		$this->iCreationTime = $iCreationTime;
 	}
@@ -72,6 +81,16 @@ class Project extends Core_DataObject
 	public function getName()
 	{
 		return $this->sName;
+	}
+
+	/**
+	 * Zwraca opis projektu
+	 *
+	 * @return	string
+	 */
+	public function getDesc()
+	{
+		return $this->sDesc;
 	}
 
 	/**
@@ -109,6 +128,18 @@ class Project extends Core_DataObject
 	}
 
 	/**
+	 * Ustawia opis projektu
+	 *
+	 * @param	string	$sDesc	nowy opis
+	 * @return	void
+	 */
+	public function setDesc($sDesc)
+	{
+		$this->sDesc = $sDesc;
+		$this->setDataValue('desc', $sDesc);
+	}
+
+	/**
 	 * Ustawia id autora
 	 *
 	 * @param	int		$iAuthorId	nowe id
@@ -118,6 +149,26 @@ class Project extends Core_DataObject
 	{
 		$this->iAuthorId = $iAuthorId;
 		$this->setDataValue('author_id', $iAuthorId);
+	}
+
+// inne
+
+	/**
+	 * (non-PHPdoc)
+	 * @see Core_DataObject::delete()
+	 */
+	public function delete()
+	{
+		try
+		{
+			$this->oDb->delete('groups', 'project_id = ' .(int) $this->iId);
+			parent::delete();
+		}
+		catch(Exception $oExc)
+		{
+			$this->oDb->rollBack();
+			throw new $oExc;
+		}
 	}
 }
 

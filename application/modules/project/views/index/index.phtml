@@ -13,11 +13,16 @@
 		<article>
 			<h4><?php echo $oItem->getName()?> </h4>
 			<p>
+				<?php echo $oItem->getDesc()?>
 			</p>
 			<p>
+				<a href="#/project/show/edit/id/<?php echo $oItem->getId() ?>">przejdź do projektu</a>
+			<?php if($this->oUser->hasPrivilege(Privileges::PROJ_ADM, $oItem->getId())): ?>
+				|
 				<a href="/project/adm/edit/id/<?php echo $oItem->getId() ?>">edytuj projekt</a> |
-				<a href="/project/users/edit/id/<?php echo $oItem->getId() ?>">zarządzaj projektem</a> |
+				<a href="/project/groups/list/id/<?php echo $oItem->getId() ?>">zarządzaj grupami</a> |
 				<a href="#/project/adm/delete/id/<?php echo $oItem->getId() ?>" class="confirm" data-confirm="Czy na pewno chcesz usunąć ten projekt?">usuń projekt</a>
+			<?php endif;?>
 			</p>
 		</article>
 	<?php endforeach;?>
