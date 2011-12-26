@@ -15,11 +15,12 @@
 	CREATE TABLE `projects` (
 	  `project_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 	  `name` varchar(255) COLLATE utf8_polish_ci NOT NULL,
+	  `desc` varchar(255) COLLATE utf8_polish_ci NOT NULL,
 	  `author_id` int(10) unsigned DEFAULT NULL,
 	  `creation_time` int(10) unsigned NOT NULL,
 	  PRIMARY KEY (`project_id`),
 	  KEY `author_id` (`author_id`)
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1 ;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 	ALTER TABLE `projects`
 	  ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE NO ACTION;
