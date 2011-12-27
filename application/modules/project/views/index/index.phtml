@@ -16,7 +16,7 @@
 				<?php echo $oItem->getDesc()?>
 			</p>
 			<p>
-				<a href="#/project/show/edit/id/<?php echo $oItem->getId() ?>">przejdź do projektu</a>
+				<a href="/project/summary/index/id/<?php echo $oItem->getId() ?>">przejdź do projektu</a>
 			<?php if($this->oUser->hasPrivilege(Privileges::PROJ_ADM, $oItem->getId())): ?>
 				|
 				<a href="/project/adm/edit/id/<?php echo $oItem->getId() ?>">edytuj projekt</a> |
