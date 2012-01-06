@@ -1,24 +1,41 @@
-<h2>Projekt: </h2><?php echo $this->oProject->getName() ?>
+<?php $this->layout_Class()->contentWrapper('col2r')?>
 
-<p>
- TUTAJ SPIS (tylko kilka pierwszych) ZADAŃ AKTUALNEGO USERA (z podziałem na środowiska i statusy)
- <br />
- (tutaj linki do pełnego spisu zdań)
-</p>
+<div class="content">
+	<header class="menu">
+		<h2>Projekt: </h2>
+		<?php echo $this->oProject->getName() ?>
+	</header>
+	<div>
+		<div class="block">
+			<header>
+				<h3>Zadania</h3>
+				<a href="/project/tasks/index/id/<?php echo $this->oProject->getId() ?>">Zobacz wszystkie zadania</a>
+			</header>
+			<p>
+				TUTAJ SPIS (tylko kilka pierwszych) ZADAŃ AKTUALNEGO USERA (z podziałem na środowiska i statusy)
+			</p>
+		</div>
+		<br />
+		<br />
 
-<p>
- TUTAJ SPIS ZADAŃ (kilka pierwszych)  NIE PRZYDZIELONYCH NIKOMU
- <br />
- (tutaj linki do pełnego spisu nowych zdań)
-</p>
+		<p>
+		 TUTAJ SPIS ZADAŃ (kilka pierwszych)  NIE PRZYDZIELONYCH NIKOMU
+		 <br />
+		 (tutaj linki do pełnego spisu nowych zdań)
+		</p>
 
-<p>
- TUTAJ SPIS FUNKCJONALNOŚCI JESZCZE NIE WPROWADZONYCH NA PRODUKCJĘ
-</p>
+		<p>
+		 TUTAJ SPIS FUNKCJONALNOŚCI JESZCZE NIE WPROWADZONYCH NA PRODUKCJĘ
+		</p>
 
-<p>
- TUTAJ SPIS WSPÓPŁRACOWNIKÓW
-</p>
+		<p>
+		 TUTAJ SPIS WSPÓPŁRACOWNIKÓW
+		</p>
+	</div>
+</div>
+
+<?php echo $this->sidebar_Project()?>
+
 
 
 

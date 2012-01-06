@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Grupy w projekcie
+ * Podsumowanie projektu
  */
 class Project_SummaryController extends Core_Controller_ProjectAction
 {

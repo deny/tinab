@@ -94,6 +94,41 @@ class UserFactory extends Core_DataObject_Factory
 	}
 
 	/**
+	 * Wyciąga userów dla podanego projektu
+	 *
+	 * @param	Project	$oProject	obiekt projektu
+	 * @param	array	$aPrivs		tablica z uprawnieniami
+	 * @param	array	$bList		czy zwrócić listę ($id => $nick), czy też tablice obiektów
+	 * @return	array
+	 */
+	public function getForProject(Project $oProject, $aPrivs = null, $bList = false)
+	{
+		$oSelect = $this->getSelect()
+						->join('user_groups AS ug', 'ug.user_id = users.user_id', '')
+						->join('groups AS g', 'g.group_id = ug.group_id', '')
+						->where('g.project_id = ?', $oProject->getId())
+						->where('status = ?', User::STATUS_ACTIVE);
+
+		if(is_array($aPrivs) && !empty($aPrivs)) // jeśli podano uprawnienia
+		{
+			$oSelect->join('group_privileges AS gp', 'gp.group_id = g.group_id', '')
+					->where('gp.privilege IN(?)', $aPrivs);
+		}
+
+		if($bList) // jeśli ma zwrócić listę
+		{
+			$oSelect->reset(Zend_Db_Select::COLUMNS)
+					->columns(array('user_id', 'CONCAT(users.surname, " " , users.name) AS nick'))
+					->order('nick');
+
+			return $this->oDb->fetchPairs($oSelect);
+		}
+
+		$aDbRes = $oSelect->order(array('users.surname', 'users.name'))->query()->fetchAll();
+		return $this->createList($aDbRes);
+	}
+
+	/**
 	 * Zwraca paginator userów z nieusuniętymi kontami
 	 *
 	 * @param	int		$iPage	strona

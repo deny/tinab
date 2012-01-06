@@ -6,6 +6,20 @@
 class Task extends Core_DataObject
 {
 	/**
+	 * Statusy zadania
+	 *
+	 * @var	string
+	 */
+	const STATUS_NEW = 'new';
+	const STATUS_ACTIVE = 'active';
+	const STATUS_SUSPEND = 'suspend';
+	const STATUS_TEST = 'test';
+	const STATUS_CR = 'code_review';
+	const STATUS_TO_ACC = 'to_accept';
+	const STATUS_ACCEPTED = 'accepted';
+	const STATUS_FINISHED = 'finished';
+
+	/**
 	 * Id zadania
 	 *
 	 * @var int
@@ -24,7 +38,7 @@ class Task extends Core_DataObject
 	 *
 	 * @var int
 	 */
-	protected $iRespUser = null;
+	protected $iRespUserId = null;
 
 	/**
 	 * Id środowiska
@@ -48,6 +62,13 @@ class Task extends Core_DataObject
 	protected $sTask;
 
 	/**
+	 * Status zadania
+	 *
+	 * @var	string
+	 */
+	protected $sStatus;
+
+	/**
 	 * Tablica z tagami dodatkowymi
 	 *
 	 * @var	array
@@ -63,20 +84,23 @@ class Task extends Core_DataObject
 	 * @param	int		$iEnvId		id środowiska
 	 * @param	int		$iPos		pozycja na liście
 	 * @param	string	$sTask		opis zadania
+	 * @param	string	$sStatus	status zadania
 	 * @param	array	$aTags		tablica z tagami
 	 * @param	array	$aPreload	tablica z preloadem
 	 * @return	Task
 	 */
-	public function __construct($iId, $iProjectId, $iRespUser, $iEnvId, $iPos, $sTask, $aTags, array $aPreload = array())
+	public function __construct($iId, $iProjectId, $iRespUser, $iEnvId, $iPos,
+								$sTask, $sStatus, $aTags, array $aPreload = array())
 	{
 		parent::__construct('tasks', array('task_id' => $iId));
 
 		$this->iId = $iId;
 		$this->iProjectId = $iProjectId;
-		$this->iRespUser = $iRespUser;
+		$this->iRespUserId = $iRespUser;
 		$this->iEnvId = $iEnvId;
 		$this->iPos = $iPos;
 		$this->sTask = $sTask;
+		$this->sStatus = $sStatus;
 		$this->aTags = $aTags;
 	}
 
@@ -107,9 +131,9 @@ class Task extends Core_DataObject
 	 *
 	 * @return	int
 	 */
-	public function getRespUser()
+	public function getRespUserId()
 	{
-		return $this->iRespUser;
+		return $this->iRespUserId;
 	}
 
 	/**
@@ -143,6 +167,16 @@ class Task extends Core_DataObject
 	}
 
 	/**
+	 * Zwraca status zadania
+	 *
+	 * @return	string
+	 */
+	public function getStatus()
+	{
+		return $this->sStatus;
+	}
+
+	/**
 	 * Zwraca tagi
 	 *
 	 * @return	array
@@ -157,13 +191,13 @@ class Task extends Core_DataObject
 	/**
 	 * Ustawia odpowiedzialnego usera
 	 *
-	 * @param	int	$iRespUser	id usera
+	 * @param	int	$iRespUserId	id usera
 	 * @return	void
 	 */
-	public function setRespUser($iRespUser)
+	public function setRespUserId($iRespUserId)
 	{
-		$this->iRespUser = $iRespUser;
-		$this->setDataValue('resp_user', $iRespUser);
+		$this->iRespUserId = $iRespUserId;
+		$this->setDataValue('resp_user', $iRespUserId);
 	}
 
 	/**
@@ -200,6 +234,18 @@ class Task extends Core_DataObject
 	{
 		$this->sTask = $sTask;
 		$this->setDataValue('task', $sTask);
+	}
+
+	/**
+	 * Ustawia nowy status zadania
+	 *
+	 * @param	string	$sStatus	nowy satus
+	 * @return	void
+	 */
+	public function setStatus($sStatus)
+	{
+		$this->sStatus = $sStatus;
+		$this->setDataValue('task_status', $sStatus);
 	}
 
 	/**

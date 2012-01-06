@@ -1,0 +1,71 @@
+<?php
+	$this->layout_Class()->contentWrapper('col2r')
+?>
+
+<div class="content">
+	<header class="menu">
+		<h2>Projekt: </h2>
+		<?php echo $this->oProject->getName() ?>
+		<a href="#" class="task-add">+nowe zadanie</a>
+		<div class="clear"></div>
+	</header>
+	<div>
+		<form action="/project/tasks/add/id/<?php echo $this->oProject->getId() ?>" method="post">
+			<label for="task">Zadanie</label>
+			<input type="text" id="task" name="task" /><br />
+
+			<label for="labels">Etykiety</label>
+			<input type="text" id="labels" name="labels"/>
+			<br />
+
+			<label for="users">Dla kogo</label>
+			<?php echo $this->formSelect('users', '', null, array('' => '-- wszyscy --') + $this->aUsers)?>
+			<br />
+
+			<button type="submit">Dodaj</button>
+			<a href="#" class="task-close">anuluj</a>
+		</form>
+		<?php $sCurrent = null;?>
+		<?php foreach($this->aTasks as $oTask):?>
+
+			<?php if($sCurrent != $oTask->getStatus()):?>
+				<?php echo isset($sCurrent) ? '</ul>' : '' ?>
+
+				<?php $sCurrent = $oTask->getStatus();?>
+				<h2><?php echo $this->task_Status($oTask->getStatus(), true)?></h2>
+				<ul class="task-list">
+			<?php endif;?>
+
+					<li>
+						<?php if($oTask->getEnvId() !== null):?>
+							<span class="task-env"><?php echo $this->aEnvs[$oTask->getEnvId()]?></span>
+						<?php endif;?>
+
+						<?php foreach($oTask->getTags() as $sTag):?>
+							<span class="task-label"><?php echo $sTag?></span>
+						<?php endforeach;?>
+
+						<span class="task"><?php echo $oTask->getTask() ?></span>
+
+						<?php if($oTask->getRespUserId() !== null):?>
+							<span class="task-user"><?php echo $this->aUsers[$oTask->getRespUserId()]?></span>
+						<?php endif;?>
+
+						<a class="task-edit" href="/project/tasks/edit/id/<?php echo $this->oProject->getId()?>/task/<?php echo $oTask->getId()?>">
+						Edytuj
+						</a>
+					</li>
+
+		<?php endforeach;?>
+
+		<?php if(isset($sCurrent)):?>
+				</ul>
+		<?php endif;?>
+	</div>
+</div>
+
+<?php echo $this->sidebar_Project()?>
+
+
+
+

@@ -13,6 +13,20 @@ class Core_Controller_ProjectAction extends Core_Controller_Action
 	protected $oProject;
 
 	/**
+	 * Uczestnicy projektu
+	 *
+	 * @var	array
+	 */
+	private $aUsers = null;
+
+	/**
+	 * Środowiska
+	 *
+	 * @var	array
+	 */
+	private $aEnvs = null;
+
+	/**
 	 * (non-PHPdoc)
 	 * @see Core_Controller_Action::init()
 	 */
@@ -33,5 +47,41 @@ class Core_Controller_ProjectAction extends Core_Controller_Action
 		$this->view->assign('iProjectId', $this->iProjectId);
 
 		parent::init();
+	}
+
+	/**
+	 * Zwraca listę członków projektu
+	 *
+	 * @return	array
+	 */
+	protected function getProjectUsers()
+	{
+		if($this->aUsers === null)
+		{
+			$this->aUsers =  UserFactory::getNew()->getForProject(
+				$this->oProject,
+				array(Privileges::PROJ_TASK),
+				true
+			);
+
+			$this->aUsers[$this->oUser->getId()] = 'Ja';
+		}
+
+		return $this->aUsers;
+	}
+
+	/**
+	 * Zwraca środowiska produkcyjne
+	 *
+	 * @return	array
+	 */
+	protected function getEnvs()
+	{
+		if($this->aEnvs === null)
+		{
+			$this->aEnvs = EnvironmentFactory::getNew()->getList();
+		}
+
+		return $this->aEnvs;
 	}
 }

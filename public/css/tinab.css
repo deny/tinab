@@ -364,3 +364,37 @@ form.standard button, form.standard .error-inline {
 	margin-left: 130px;
 }
 /* @end =site-col2r */
+/* @group =task-list */
+.task-list {
+	list-style: circle;
+	padding-left: 30px;
+	font-size: 12px;
+	margin: 20px 0;
+}
+.task-label {
+	font-size: 10px;
+	display: inline-block;
+	height: 10px;
+	padding: 5px 5px;
+	background-color: #aaf;
+}
+.task-user {
+	font-size: 12px;
+	margin-left: 10px;
+	display: inline-block;
+	height: 14px;
+	padding: 5px 5px;
+	background-color: #eee;
+}
+.task-env {
+	font-size: 10px;
+	margin-left: 20px;
+	display: inline-block;
+	height: 10px;
+	padding: 5px 5px;
+	background-color: #fcc;
+}
+.task-edit {
+	font-size: 10px;
+}
+/* @end =task-list */

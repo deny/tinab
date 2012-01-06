@@ -1,0 +1,53 @@
+<?php
+	$this->layout_Class()->contentWrapper('col2r')
+?>
+
+<div class="content">
+	<header class="menu">
+		<h2>Edycja tasku dla projektu: </h2>
+		<?php echo $this->oProject->getName() ?>
+		<div class="clear"></div>
+	</header>
+	<div>
+		<form action="/project/tasks/edit/id/<?php echo $this->oProject->getId() ?>/task/<?php echo $this->oTask->getId() ?>" method="post">
+			<?php $sField = 'task';
+			echo $this->form_Field(
+				'Zadanie',
+				$sField,
+				$this->formText($sField, $this->form_Value($sField))
+			)?>
+
+			<?php $sField = 'status';
+			echo $this->form_Field(
+				'Status',
+				$sField,
+				$this->formSelect($sField, $this->form_Value($sField), null, $this->task_Status()->getList())
+			)?>
+
+			<?php $sField = 'labels';
+			echo $this->form_Field(
+				'Etykiety',
+				$sField,
+				$this->formText($sField, $this->form_Value($sField))
+			)?>
+
+			<?php $sField = 'users';
+			echo $this->form_Field(
+				'Dla kogo',
+				$sField,
+				$this->formSelect($sField, $this->form_Value($sField), null, array('' => '-- wszyscy --') + $this->aUsers)
+			)?>
+
+			<?php $sField = 'env';
+			echo $this->form_Field(
+				'Środowisko',
+				$sField,
+				$this->formSelect($sField, $this->form_Value($sField), null, array('' => '-- brak --') + $this->aEnvs)
+			)?>
+
+			<button type="submit">Zapisz</button>
+			<a href="/project/tasks/index/id/<?php echo $this->oProject->getId() ?>" class="task-close">anuluj</a>
+
+		</form>
+	</div>
+</div>

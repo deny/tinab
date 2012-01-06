@@ -33,6 +33,19 @@ class EnvironmentFactory extends Core_DataObject_Factory
 	}
 
 	/**
+	 * Zwraca tablicę (id => środowisko)
+	 *
+	 * @return	array
+	 */
+	public function getList()
+	{
+		$oSelect = $this->getSelect(array('env_id', 'name'))
+						->order('env_pos');
+
+		return $this->oDb->fetchPairs($oSelect);
+	}
+
+	/**
 	 * (non-PHPdoc)
 	 * @see Core_DataObject_Factory::createObject()
 	 */
