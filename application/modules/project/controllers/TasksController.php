@@ -46,55 +46,55 @@ class Project_TasksController extends Core_Controller_ProjectAction
 	 */
 	public function addAction()
 	{
-		// @todo zamienić na wersję w ajax
-
-		if($this->_request->isPost())
-		{
-			$oFilter = $this->getFilter();
-
-			if($oFilter->isValid())
-			{
-				$aValues = $oFilter->getEscaped();
-
-				$this->oFactory->create(
-					$this->oProject,
-					$aValues['task'],
-					explode(',', $aValues['labels']),
-					empty($aValues['users']) ? null : (int) $aValues['users']
-				);
-
-				$this->addMessage('Zadanie zostało dodane', self::MSG_OK);
-				$this->_redirect('/project/tasks/index/id/'. $this->oProject->getId());
-				exit();
-
-			}
-
-			// obróbka komunikatów błędów
-			$aMsg = $oFilter->getMessages();
-			$aTmp = array();
-			foreach($aMsg as $sField => $aField)
-			{
-				$aTmp[$sField] = array();
-				foreach($aField as $sError)
-				{
-					$aTmp[$sField][] = $sError;
-				}
-			}
-
-			// @todo zwracamy JSON-em do skryptu JS
-			$sMsg = '';
-			foreach($aTmp as $sField => $aMsgs)
-			{
-				if(!empty($aMsgs))
-				{
-					$sMsg = $sField . ': ' . implode(', ', $aMsgs);
-				}
-			}
-
-			$this->addMessage($sMsg, self::MSG_ERROR, true);
-		}
-
-		$this->_forward('index');
+//		// @todo zamienić na wersję w ajax
+//
+//		if($this->_request->isPost())
+//		{
+//			$oFilter = $this->getFilter();
+//
+//			if($oFilter->isValid())
+//			{
+//				$aValues = $oFilter->getEscaped();
+//
+//				$this->oFactory->create(
+//					$this->oProject,
+//					$aValues['task'],
+//					explode(',', $aValues['labels']),
+//					empty($aValues['users']) ? null : (int) $aValues['users']
+//				);
+//
+//				$this->addMessage('Zadanie zostało dodane', self::MSG_OK);
+//				$this->_redirect('/project/tasks/index/id/'. $this->oProject->getId());
+//				exit();
+//
+//			}
+//
+//			// obróbka komunikatów błędów
+//			$aMsg = $oFilter->getMessages();
+//			$aTmp = array();
+//			foreach($aMsg as $sField => $aField)
+//			{
+//				$aTmp[$sField] = array();
+//				foreach($aField as $sError)
+//				{
+//					$aTmp[$sField][] = $sError;
+//				}
+//			}
+//
+//			// @todo zwracamy JSON-em do skryptu JS
+//			$sMsg = '';
+//			foreach($aTmp as $sField => $aMsgs)
+//			{
+//				if(!empty($aMsgs))
+//				{
+//					$sMsg = $sField . ': ' . implode(', ', $aMsgs);
+//				}
+//			}
+//
+//			$this->addMessage($sMsg, self::MSG_ERROR, true);
+//		}
+//
+//		$this->_forward('index');
 	}
 
 	/**

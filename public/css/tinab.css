@@ -365,6 +365,10 @@ form.standard button, form.standard .error-inline {
 }
 /* @end =site-col2r */
 /* @group =task-list */
+.task-add-form {
+	background-color: #eee;
+	padding: 5px;
+}
 .task-list {
 	list-style: circle;
 	padding-left: 30px;
@@ -388,7 +392,6 @@ form.standard button, form.standard .error-inline {
 }
 .task-env {
 	font-size: 10px;
-	margin-left: 20px;
 	display: inline-block;
 	height: 10px;
 	padding: 5px 5px;

@@ -1,5 +1,14 @@
 <?php
-	$this->layout_Class()->contentWrapper('col2r')
+	$this->layout_Class()->contentWrapper('col2r');
+
+	$this->headScript()->appendFile('/js/lib/Model.js')
+						->appendFile('/js/lib/Factory.js')
+						->appendFile('/js/models/User.js')
+						->appendFile('/js/models/Env.js')
+						->appendFile('/js/models/Task.js')
+						->appendFile('/js/models/TaskFactory.js')
+						->appendFile('/js/tasks.js')
+						->callJs('Lib_Factory.setProjectId', $this->oProject->getId());
 ?>
 
 <div class="content">
@@ -10,7 +19,7 @@
 		<div class="clear"></div>
 	</header>
 	<div>
-		<form action="/project/tasks/add/id/<?php echo $this->oProject->getId() ?>" method="post">
+		<form class="task-add-form hide" action="#" method="post">
 			<label for="task">Zadanie</label>
 			<input type="text" id="task" name="task" /><br />
 
@@ -33,7 +42,7 @@
 
 				<?php $sCurrent = $oTask->getStatus();?>
 				<h2><?php echo $this->task_Status($oTask->getStatus(), true)?></h2>
-				<ul class="task-list">
+				<ul class="task-list <?php echo $sCurrent?>">
 			<?php endif;?>
 
 					<li>
@@ -63,6 +72,21 @@
 		<?php endif;?>
 	</div>
 </div>
+<ul class="hide">
+	<li>
+		<span class="task-env"></span>
+		<span class="task-label"></span>
+		<span class="task"><?php echo $oTask->getTask() ?></span>
+
+		<?php if($oTask->getRespUserId() !== null):?>
+			<span class="task-user"><?php echo $this->aUsers[$oTask->getRespUserId()]?></span>
+		<?php endif;?>
+
+		<a class="task-edit" href="/project/tasks/edit/id/<?php echo $this->oProject->getId()?>/task/<?php echo $oTask->getId()?>">
+		Edytuj
+		</a>
+	</li>
+</ul>
 
 <?php echo $this->sidebar_Project()?>
 
