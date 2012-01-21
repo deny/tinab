@@ -117,7 +117,7 @@ function Lib_Model() {
 	 * @returns	bool
 	 */
 	function validate() {
-		console.log(modelData.aData);
+//		console.log(modelData.aData);
 	};
 	
 	/**

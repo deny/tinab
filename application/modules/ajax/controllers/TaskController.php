@@ -21,7 +21,7 @@ class Ajax_TaskController extends Core_Controller_ProjectAction
 		// wymagane uprawnienia
 		$this->setAcl(
 			array(
-				'get-one', 'create'
+				'get-one', 'create', 'save', 'delete'
 			),
 			array(Privileges::PROJ_TASK)
 		);
@@ -91,7 +91,7 @@ class Ajax_TaskController extends Core_Controller_ProjectAction
 
 			$oTask->setTask($aValues['task']);
 			$oTask->setRespUserId(empty($aValues['users']) ? null : (int) $aValues['users']);
-			$oTask->setEnvId(isset($aValues['env']) ? (int) $aValues['env'] : null);
+			$oTask->setEnvId(empty($aValues['env']) ? null : (int) $aValues['env']);
 			$oTask->setTags(empty($aValues['labels']) ? array() : explode(',', $aValues['labels']));
 			$oTask->setStatus($aValues['status']);
 			$oTask->save();
@@ -100,6 +100,28 @@ class Ajax_TaskController extends Core_Controller_ProjectAction
 		}
 
 		exit(json_encode(array('success' => false, 'msg' => $this->preapareMsg($oFilter))));
+	}
+
+	/**
+	 * Obsługa usuwania taska
+	 */
+	public function deleteAction()
+	{
+		if(!$this->_request->isPost())
+		{
+			$this->moveTo404();
+		}
+
+		try
+		{
+			$oTask = $this->getTask();
+			$oTask->delete();
+
+			exit(json_encode(array('success' => true)));
+		}
+		catch(Exception $oExc) {}
+
+		exit(json_encode(array('success' => false)));
 	}
 
 	/**
@@ -207,6 +229,7 @@ class Ajax_TaskController extends Core_Controller_ProjectAction
 		{
 			$aValidators  += array(
 				'env' => array(
+					'allowEmpty' => true,
 					new Core_Validate_InArray(array_keys($this->getEnvs()))
 				),
 				'status' => array(

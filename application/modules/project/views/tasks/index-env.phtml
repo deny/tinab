@@ -8,7 +8,7 @@
 						->appendFile('/js/models/Task.js')
 						->appendFile('/js/models/TaskFactory.js')
 						->appendFile('/js/tasks.js')
-						->appendFile('/js/taskEditS.js')
+						->appendFile('/js/taskEditE.js')
 						->callJs('Lib_Factory.setProjectId', $this->oProject->getId());
 ?>
 
@@ -16,8 +16,8 @@
 	<header class="menu">
 		<h2>Projekt: </h2>
 		<?php echo $this->oProject->getName() ?>
-		<a href="/project/tasks/index-env/id/<?php echo $this->oProject->getId()?>">wg środowiska</a>
-		<a>wg realizacji | </a>
+		<a> | wg środowiska</a>
+		<a href="/project/tasks/index/id/<?php echo $this->oProject->getId()?>">wg realizacji</a>
 		<div class="clear"></div>
 	</header>
 	<div>
@@ -36,18 +36,43 @@
 			<button type="submit">Dodaj</button>
 			<a href="#" class="task-close">anuluj</a>
 		</form>
-		<?php $sCurrent = null;?>
+			<h2>Brak środowiska</h2>
+			<ul class="task-list none">
+		<?php foreach($this->aTasks as $oTask):?>
+			<?php if(null == $oTask->getEnvId()):?>
+					<li>
+						<input type="checkbox" class="task" data-id="<?php echo $oTask->getId()?>" />
+						<span class="task-env"><?php echo $this->task_Status($oTask->getStatus()) ?></span>
 
-		<?php foreach($this->task_Status()->getList(1) as $sStatus => $sStatusName):?>
-			<h2><?php echo $sStatusName ?></h2>
-				<ul class="task-list <?php echo $sStatus?>">
+						<?php foreach($oTask->getTags() as $sTag):?>
+							<span class="task-label"><?php echo $sTag?></span>
+						<?php endforeach;?>
+
+						<span class="task"><?php echo $oTask->getTask() ?></span>
+
+						<?php if($oTask->getRespUserId() !== null):?>
+							<span class="task-user"><?php echo $this->aUsers[$oTask->getRespUserId()]?></span>
+						<?php endif;?>
+
+						<a class="task-edit" href="/project/tasks/edit/id/<?php echo $this->oProject->getId()?>/task/<?php echo $oTask->getId()?>">
+						Edytuj
+						</a>
+						<a class="task-del" href="#" data-id="<?php echo $oTask->getId()?>">
+						Usuń
+						</a>
+					</li>
+			<?php endif;?>
+		<?php endforeach;?>
+			</ul>
+
+		<?php foreach($this->aEnvs as $iEnv => $sEnv):?>
+			<h2><?php echo $sEnv ?></h2>
+				<ul class="task-list <?php echo $iEnv?>">
 			<?php foreach($this->aTasks as $oTask):?>
-				<?php if($sStatus == $oTask->getStatus()):?>
+				<?php if($iEnv == $oTask->getEnvId()):?>
 						<li>
 							<input type="checkbox" class="task" data-id="<?php echo $oTask->getId()?>" />
-							<?php if($oTask->getEnvId() !== null):?>
-								<span class="task-env"><?php echo $this->aEnvs[$oTask->getEnvId()]?></span>
-							<?php endif;?>
+							<span class="task-env"><?php echo $this->task_Status($oTask->getStatus()) ?></span>
 
 							<?php foreach($oTask->getTags() as $sTag):?>
 								<span class="task-label"><?php echo $sTag?></span>
@@ -61,9 +86,6 @@
 
 							<a class="task-edit" href="/project/tasks/edit/id/<?php echo $this->oProject->getId()?>/task/<?php echo $oTask->getId()?>">
 							Edytuj
-							</a>
-							<a class="task-del" href="#" data-id="<?php echo $oTask->getId()?>">
-							Usuń
 							</a>
 						</li>
 				<?php endif;?>

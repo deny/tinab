@@ -95,14 +95,14 @@ abstract class Core_DataObject_Factory
 	 * @param	string|Core_DataObject_Where	$oWhere		where string or Where object
 	 * @return	array
 	 */
-	public function getFromWhere($mWhere, array $aOrder = array())
+	public function getFromWhere($mWhere, array $aOrder = array(), $mOption = null)
 	{
 		if($mWhere instanceof Core_DataObject_Where)
 		{
 			$mWhere = $mWhere->getWhere();
 		}
 
-		$oSelect = $this->getSelect()->where($mWhere);
+		$oSelect = $this->getSelect('*', $mOption)->where($mWhere);
 
 		if(!empty($aOrder))
 		{

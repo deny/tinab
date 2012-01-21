@@ -12,8 +12,8 @@ class View_Helper_Task_Status extends Zend_View_Helper_Abstract
 	 */
 	protected $aStatus = array(
 		Task::STATUS_NEW 		=> array('Nowe', 'Nowe zadania'),
-		Task::STATUS_ACTIVE 	=> array('Aktywne', 'Aktywne zadania'),
 		Task::STATUS_SUSPEND 	=> array('Zawieszone', 'Zawieszone zadania'),
+		Task::STATUS_ACTIVE 	=> array('Aktywne', 'Aktywne zadania'),
 		Task::STATUS_TEST		=> array('Testy', 'Testowane zadania'),
 		Task::STATUS_CR			=> array('Code review', 'Zadania do code review'),
 		Task::STATUS_TO_ACC		=> array('W akceptacji', 'Zadania do akceptacji'),
@@ -50,13 +50,13 @@ class View_Helper_Task_Status extends Zend_View_Helper_Abstract
 	 *
 	 * @return	array
 	 */
-	public function getList()
+	public function getList($iPos = 0)
 	{
 		$aTmp = array();
 
 		foreach($this->aStatus as $sStatus => $aInfo)
 		{
-			$aTmp[$sStatus] = $aInfo[0];
+			$aTmp[$sStatus] = $aInfo[$iPos];
 		}
 
 		return $aTmp;

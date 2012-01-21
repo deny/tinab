@@ -21,7 +21,7 @@ class Project_TasksController extends Core_Controller_ProjectAction
 		// wymagane uprawnienia
 		$this->setAcl(
 			array(
-				'index', 'add', 'edit'
+				'index', 'index-env', 'add', 'edit'
 			),
 			array(Privileges::PROJ_TASK)
 		);
@@ -37,6 +37,20 @@ class Project_TasksController extends Core_Controller_ProjectAction
 	public function indexAction()
 	{
 		$this->view->assign('aTasks', $this->oFactory->getActiveList($this->oProject));
+		$this->view->assign('aUsers', $this->getProjectUsers());
+		$this->view->assign('aEnvs', $this->getEnvs());
+	}
+
+	/**
+	 * Lista zadań wg środowiska
+	 */
+	public function indexEnvAction()
+	{
+		$this->view->assign('aTasks', $this->oFactory->getActiveList(
+			$this->oProject,
+			array('env_pos', 'pos'),
+			array('env' => true)
+		));
 		$this->view->assign('aUsers', $this->getProjectUsers());
 		$this->view->assign('aEnvs', $this->getEnvs());
 	}

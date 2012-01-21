@@ -116,17 +116,17 @@ function Task(data)
 	 * @return	void
 	 */
 	this.setTask = function(sTask) {
-		return this.set('task', sTask);
+		this.set('task', sTask);
 	};
 	
 	/**
 	 * Ustawia środowisko
 	 * 
-	 * @param	string	sEnv	nowe środowisko	
+	 * @param	Env	oEnv	nowe środowisko	
 	 * @return	void
 	 */
-	this.setEnv = function(sEnv) {
-		return this.set('env', sEnv);
+	this.setEnv = function(oEnv) {
+		this.set('env', oEnv);
 	};
 	
 	/**
@@ -136,7 +136,7 @@ function Task(data)
 	 * @return	void
 	 */
 	this.setStatus = function(sStatus) {
-		return this.set('status', sStatus);
+		this.set('status', sStatus);
 	};
 	
 	/**
@@ -146,7 +146,7 @@ function Task(data)
 	 * @return	void
 	 */
 	this.setUser = function(oUser) {
-		return this.set('user', oUser);
+		this.set('user', oUser);
 	};	
 }
 

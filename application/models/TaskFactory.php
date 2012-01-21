@@ -46,12 +46,30 @@ class TaskFactory extends Core_DataObject_Factory
 	 * @param 	Project $oProject	obiekt projektu
 	 * @return	array
 	 */
-	public function getActiveList(Project $oProject)
+	public function getActiveList(Project $oProject, $aOrder = null, $mOption = null)
 	{
+		$aOrder = isset($aOrder) ? $aOrder : array('task_status', 'pos');
 		return $this->getFromWhere(
 			new Core_DataObject_Where('task_status != ?', Task::STATUS_FINISHED),
-			array('task_status', 'pos')
+			$aOrder,
+			$mOption
 		);
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see Core_DataObject_Factory::getSelect()
+	 */
+	protected function getSelect($mFields = '*', $mOption = null)
+	{
+		$oSelect = parent::getSelect();
+
+		if(isset($mOption) && isset($mOption['env']))
+		{
+			$oSelect->joinLeft('environments AS e', 'tasks.env_id = e.env_id', '');
+		}
+
+		return $oSelect;
 	}
 
 	/**

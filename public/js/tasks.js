@@ -1,21 +1,4 @@
 $(document).ready(function(){
-
-//	oTask = new Task();
-//	oTask.setTask('nowy task');
-//	oTask.setEnv('nowe env');
-//			
-//	console.log(oTask.getTask());
-//	oTask.save();
-//	console.log(oTask.getTask());
-//	oTask.setTask('lalala');
-//	console.log(oTask.getTask());
-//	oTask.revert();
-//	console.log(oTask.getTask());
-//	
-//	Task.load(1);
-	
-//	oTask = TaskFactory.getNew().getOne(4);
-//	console.log(oTask.getTask());
 	
 	/**
 	 * Wyświetlenie formularza dodawania taska
@@ -26,6 +9,24 @@ $(document).ready(function(){
 		$('#labels').val('');
 		$('.task-add-form').show(500);
 		$('.task-add-form .error-inline').detach();
+		return false;
+	});
+	
+	/**
+	 * Wyświetlenie formularza dodawania taska
+	 */
+	$('.task-del').click(function(){
+		
+		if(confirm('Czy na pewno chcesz usunąć to zadanie?'))
+		{
+			iId = $(this).attr('data-id');
+			oFactory = new TaskFactory();
+			if(oFactory.del(iId))
+			{
+				$('input.task[data-id="'+ iId +'"]').parent().detach();
+			}
+		}
+
 		return false;
 	});
 	
@@ -52,32 +53,7 @@ $(document).ready(function(){
 		oTmp = oFactory.create(data);
 		if(oTmp != null) // dane poprawne
 		{
-			oList = $('.task-list.new');
-			
-			sLi = '<li data-id="'+ oTmp.getId() +'">';
-			if(oTmp.getEnv() != null)
-			{
-				sLi += ' <span class="task-env">'+ oTmp.getEnv().getName() +'</span> ';
-			}
-			
-			aLabels = oTmp.getLabels();
-			$.each(aLabels, function(iKey) {
-				sLi +=  ' <span class="task-label">'+ aLabels[iKey] +'</span> ';
-			});
-			
-			sLi += ' <span class="task">'+ oTmp.getTask() +'</span> ';
-			
-			if(oTmp.getUser() != null)
-			{
-				sLi += ' <span class="task-user">'+ oTmp.getUser().getName() +'</span> ';
-			}
-			
-			sLi += ' <a class="task-edit" href="#">Edytuj</a> ';
-			sLi += '</li>';
-			
-			oList.append(sLi);
-			
-			// @todo dodanie taska do listy
+			changeTask(oTmp);
 			$('.task-add-form').hide(500);
 		}
 		else // pokazanie błędów
@@ -107,6 +83,124 @@ $(document).ready(function(){
 			}
 			
 		});
+	}
+	
+// OPERACJE GRUPOWE
+	/**
+	 * Grupowa zmiana środowiska
+	 */
+	$('.env-ch').click(function(){
+		
+		aIds = getTasks();	
+		
+		var aEnvData = null;
+		if($(this).attr('data-id') != 0)
+		{
+			aEnvData = {
+				'id':	$(this).attr('data-id'),
+				'name': $(this).html()
+			};
+		}
+		var oFactory = new TaskFactory();
+		
+		$.each(aIds, function(iKey){
+			
+			oTmp = oFactory.getOne(aIds[iKey]);
+			oTmp.setEnv(aEnvData == null ? null : new Env(aEnvData));
+			oTmp.save();
+			
+			oTmp = oFactory.save(oTmp);
+			
+			changeTask(oTmp);
+		});
+		
+		return false;
+	});
+	
+	/**
+	 * Grupowa zmiana statusu
+	 */
+	$('.status-ch').click(function(){
+		
+		aIds = getTasks();
+		
+		sStatus = $(this).attr('data-id');
+		var oFactory = new TaskFactory();
+		
+		$.each(aIds, function(iKey){
+			
+			oTmp = oFactory.getOne(aIds[iKey]);
+			oTmp.setStatus(sStatus);
+			oTmp.save();
+			
+			oTmp = oFactory.save(oTmp);
+			
+			changeTask(oTmp);
+		});
+		
+		return false;
+	});
+	
+	/**
+	 * Grupowa zmiana usera
+	 */
+	$('.user-ch').click(function(){
+		
+		aIds = getTasks();
+		
+		if($(this).attr('data-id') == 0)
+		{
+			oUser = null;
+		}
+		else
+		{
+			oUser = new Env({
+				'id':	$(this).attr('data-id'),
+				'name': $(this).html()
+			});
+		}
+		
+		var oFactory = new TaskFactory();
+		
+		$.each(aIds, function(iKey){
+			
+			oTmp = oFactory.getOne(aIds[iKey]);
+			oTmp.setUser(oUser);
+			oTmp.save();
+			
+			oTmp = oFactory.save(oTmp);
+			
+			changeTask(oTmp);
+		});
+		
+		return false;
+	});
+	
+	/**
+	 * Zwraca id zaznaczonych zadań
+	 */
+	function getTasks() {
+		
+		aTasks = $('input.task:checked');
+		
+		if(aTasks.size() < 1)
+		{
+			alert('Musisz wybrać zadania');
+		}
+		
+		var aTmp = new Array();
+		$.each(aTasks, function(){
+			aTmp.push($(this).attr('data-id'));
+		});
+		
+		return aTmp;
+	}
+	
+	/**
+	 * Odznacza zaznaczone zadania
+	 */
+	function clearTasks() {
+		$('input.task:checked').checked(false);
 	}
 	
 	
