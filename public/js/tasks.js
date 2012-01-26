@@ -15,7 +15,7 @@ $(document).ready(function(){
 	/**
 	 * Wyświetlenie formularza dodawania taska
 	 */
-	$('.task-del').click(function(){
+	$('.task-del').live('click', function(){
 		
 		if(confirm('Czy na pewno chcesz usunąć to zadanie?'))
 		{
